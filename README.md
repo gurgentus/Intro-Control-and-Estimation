@@ -7,7 +7,7 @@ As such, the goal is twofold, first to introduce the more theory oriented studen
 Warning: These notes are a work in progress and I expect to have the full notes done by the end of Summer 2017.
 
 
-## Table of Context
+## Table of Context  
 
 <a href="https://gurgentus.github.io/intro-control-and-estimation/Frequency-Domain-Analysis.html"> Frequency Domain Analysis </a>
 
