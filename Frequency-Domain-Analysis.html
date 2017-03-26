@@ -1,0 +1,196 @@
+
+<div id="content">	<section id="post-386" class="post-386 page type-page status-publish hentry">
+		<article>
+
+			
+			<header class="entry-header">
+    			<h2 class="entry-title">
+    				Week 3 Lecture 3: Frequency Domain Analysis    			</h2><!-- .entry-title -->
+  			</header>
+
+  			
+  			
+  			<div class="entry-content clearfix">
+    			<p><script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script><br />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script><br />
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script></p>
+<style>
+  .bordered {
+    #width: 200px;
+    #height: 100px;
+    padding: 20px;
+    border: 1px solid darkorange;
+    border-radius: 8px;
+  }
+</style>
+<header>
+<h1> Frequency Domain Analysis </h1>
+</header>
+<p><font color='green'> Mathematical connections: differential equations, Laplace transform. </font></p>
+<p><break></p>
+<p>This week we concentrate on systems of differential equations of the form<br />
+\begin{equation}<br />
+\dot{x}(t) = F(t) x(t) + G(t) u(t) + L(t) w(t),<br />
+\label{eq:dyneq}<br />
+\end{equation}<br />
+where $u$ represents controllable inputs and $w$ represents uncontrollable inputs (disturbances).</p>
+<p>As we saw last week such linear systems usually arise by the process of linearization, where the corresponding state, input, and disturbance vectors are written as perturbations from some `simple&#8217; state, input, and disturbance values:<br />
+$$<br />
+x_0 + x(t), u_0 + u(t), \mbox{ and } w_0 + w(t).<br />
+$$<br />
+We will come back to the idea of linearization in later weeks, so for now there is no danger in assuming that \eqref{eq:dyneq} describes our model precisely.</p>
+<p>Our goal is to study the dynamics in the form of an abstract first order linear differential equation<br />
+\begin{equation}<br />
+\label{eq:abssys}<br />
+\dot{x}(t) = A(t) x(t) + e(t),<br />
+\end{equation}<br />
+where the equation is homogeneous if $e \equiv 0$.</p>
+<p>We may study various types of controls:</p>
+<ul>
+<li>
+ In an open-loop control $u(t)$ is a predetermined function and so the system can be written as<br />
+$$<br />
+\dot{x} = A(t) x + e(t),<br />
+$$<br />
+where $A(t) = F(t)$ and $e(t) = G(t) u(t) + L(t) w(t)$. Even without disturbances the equation is nonhomogeneous.</p>
+</li>
+<li> Systems with closed-loop feedback control may assume the control can be written as:<br />
+$$<br />
+u(t) = -C(t) x(t),<br />
+$$<br />
+and so our system can be written as:<br />
+$$<br />
+\dot{x} = A(t) x + e(t),<br />
+$$<br />
+where $A(t) := F(t) &#8211; G(t) C(t)$ and $e(t) := L(t) w(t)$. Note if there are no disturbances we get a homogeneous system.</p>
+<p>Intuitively think about designing control actions for flying an airplane, it would probably produce a more `stable&#8217; situation if your control somehow reacts to the state of the airplane, as opposed to predetermining all of the controls on the ground before taking off (even if you calculated that those controls should be optimal, small unpredictable disturbances sure to occur in the air could make those controls useless).</p>
+<li> In addition one could add dynamic compensation to the control feedback law:<br />
+$$<br />
+u(t) = -C_1(t) x(t) &#8211; C_2(t) \int_0^t H_\xi x(\tau) d \tau,<br />
+$$<br />
+i.e. the control $u$ depends not just on the current state, but on the contribution from all previous states. Here $H_\xi$ is an identity matrix with some of the rows removed (if the corresponding element of the state should not have an effect).</p>
+<p>Can we still put this into the framework of \eqref{eq:abssys}?<br />
+Let&#8217;s define $\xi(t)$ to be the solution of<br />
+$$<br />
+\dot{\xi}(t) = H_\xi x(t), \quad \xi(0) = 0.<br />
+$$<br />
+Then by the Fundamental Theorem of Calculus<br />
+$$<br />
+u(t) = -C_1(t) x(t) &#8211; C_2(t) \xi(t)<br />
+$$<br />
+and the dynamics can be described by<br />
+$$<br />
+\begin{bmatrix}<br />
+\dot{x}(t) \\<br />
+\dot{\xi}(t)<br />
+\end{bmatrix}<br />
+=<br />
+\begin{bmatrix}<br />
+F(t) &#8211; G(t) C_1(t) &amp; -G(t) C_2(t) \\<br />
+H_\xi &amp; 0<br />
+\end{bmatrix}<br />
+\begin{bmatrix}<br />
+x(t) \\<br />
+\xi(t)<br />
+\end{bmatrix}<br />
++<br />
+\begin{bmatrix}<br />
+L(t) w(t) \\<br />
+0<br />
+\end{bmatrix},<br />
+$$<br />
+which redefining $x$ to be the above vector can again be written in the form<br />
+$$<br />
+\dot{x} = A(t) x + e(t).<br />
+$$<br />
+Again without disturbances $w$ the system is homogeneous.</p>
+<li> Finally, the choice of control could involve solving a differential equations on its own. Such actuator dynamics can take the form<br />
+$$<br />
+\dot{u}(t) = F_C(t) u(t),<br />
+$$<br />
+for a given $F_C(t)$. Here we can again write the equation in the general form (RS 2.5-19)<br />
+$$<br />
+\begin{bmatrix}<br />
+\dot{x}(t) \\<br />
+\dot{u}(t)<br />
+\end{bmatrix}<br />
+=<br />
+\begin{bmatrix}<br />
+F(t) &amp; G(t) \\<br />
+0 &amp; F_C(t)<br />
+\end{bmatrix}<br />
+\begin{bmatrix}<br />
+x(t) \\<br />
+u(t)<br />
+\end{bmatrix}<br />
++<br />
+\begin{bmatrix}<br />
+L(t) w(t) \\<br />
+0<br />
+\end{bmatrix},<br />
+$$
+</li>
+</ul>
+<p>Hopefully at this point you are convinced that there are various way to design our controls and a pressing question is how these choices can be designed to drive the state of our model to the behavior we want.  One complication of this analysis is the fact that the relations between the control and the state are through differential equations.  As we will see in the remainder of this week, the Laplace Transform which you doubtless encountered in an elementary differential equations course is extremely helpful in this context.  Below I describe the `Frequency Domain Methods&#8217; that utilize this marvelous invention of Pierre-Simon Laplace.</p>
+<p>We&#8217;ll come back to the feedback controls soon enough, but for now let&#8217;s return to \eqref{eq:dyneq} as is and assume in addition that the matrices $F$ and $G$ do not depend on $t$ and there is no uncontrollable input.  Recall that the Laplace Transform of the resulting equation<br />
+\[<br />
+\dot{x}(t) = F x(t) + G u(t)<br />
+\]<br />
+is given by<br />
+\[<br />
+s X(s) = F X(s) + G U(s) + x(0).<br />
+\]<br />
+We also assume that we have an output vector<br />
+\[<br />
+y(t) = H x(t),<br />
+\]<br />
+with the corresponding equation in the `frequency domain&#8217;:<br />
+\begin{equation}<br />
+\label{eq:siso}<br />
+Y(s) = H X(s).<br />
+\end{equation}<br />
+If you have only seen Laplace Transforms applied to scalar equations you should convince yourself that the formulas above still make sense in the vector setting, after all you are simply taking the Laplace Transform of all equations in your system.</p>
+<p>Assuming $x(0) = 0$ and using a little linear algebra magic we can write the input-output relation in the frequency domain as<br />
+$$<br />
+(sI &#8211; F) X(s) = G U(s),<br />
+$$<br />
+or<br />
+$$<br />
+X(s) = (sI &#8211; F)^{-1} G U(s).<br />
+$$<br />
+Similarly,<br />
+$$<br />
+Y(s) = H X(s) = [H (sI &#8211; F)^{-1} G] U(s).<br />
+$$</p>
+<p>In the frequency domain the relation between the control and the state or the output is simply represented by a multiplication by an $s$-dependent matrix, an ugly matrix, $H (sI &#8211; F)^{-1} G$ but still just a matrix. We will call it the transfer function.</p>
+<p>Finally, we make one more assumption destroying large part of our generalization only to be recovered later in the semester.  That is we assume that the control $u(t)$ is a single scalar and so is the output $y(t)$.  In other words the ugly matrix $H (sI &#8211; F)^{-1} G$  relating the corresponding Laplace Transforms is nothing other than a scalar. Don&#8217;t relax too much though $H$, $I$, $F$, and $G$ are still matrices (or at best vectors), as I never said that the state $x(t)$ is a scalar, that would make things really too simple and not as interesting.  So $x$ is still an n-dimensional vector and the dynamics equation is still a system, all we are saying is that it is controlled by one input and produces one output.  You should check that it then makes sense that $G$ is $n \times 1$, $F$ is $n \times n$ and $H$ to be $1 \times n$.</p>
+<div class="bordered">
+Time to get your hands dirty.  Take the linearization of the simple car model from last week. We&#8217;ll need to get rid of some of the controls to fit it into our assumptions. I will suggest assuming a constant thrust $T = T_0$ and leaving the steering to be our only control $u = \delta w$.  We will also have to introduce the output equation $y(t) = H x(t)$ for this model.  Our state $x$ consisted of things like velocity, orientation, the position coordinates, and mass. Let&#8217;s take the orientation $\xi$ as our output.  Can you see what $H$ would have to be to provide this information to $y$ on the proverbial golden plate?  How about $H = [0, 1, 0, 0, 0]$ since the orientation $\xi$ appeared as the second component of $x$?  At this point you should be able to turn in an assignment with a nonlinear system of differential equations describing the simple car model, the linearized version done last week (written in the abstract form of \eqref{eq:dyneq} and \eqref{eq:siso}, with the expressions for $F$, $G$,and $H$ given separately, and an expression in the form:<br />
+$$<br />
+Y(s) = T(s) U(s)<br />
+$$<br />
+relating the single input to single output in the frequency domain.  Again, leave this expression in the form above, just add what $T(s)$ is separately.
+</div>
+<p><break><br />
+Source: Optimal Control and Estimation, Robert Stengel</p>
+    			  			</div>
+
+  			
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+		</article>
+	</section>
+</div><!-- #content --></div><!-- #container -->
+
+
+	   </div><!-- #main -->
+
