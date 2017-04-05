@@ -23,6 +23,8 @@ A Course in Robust Control Theory: a convex approach, Geir E. Dullerud and Ferna
 
 Robust and Adaptive Control with Aerospace Applications, Eugene Lavretsky and Kevin A. Wise
 
+Теория автоматического управления, Гольдфарб Л. С, Балтрушевич А. В., Нетушил А. В. и др.
+
 ## Table of Context  
 
 ### Module 1 - Classical Control
