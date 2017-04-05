@@ -7,6 +7,21 @@ As such, the goal is twofold, first to introduce the more theory oriented studen
 
 Warning: These notes are a work in progress and I expect to have the full notes done by the end of Summer 2017.  Realistically, due to time constraints end of Module 3 and Module 4 would be taught as a second semester of the course.  
 
+### References:
+
+Optimal Control and Estimation, Robert F. Stengel
+
+Calculus of Variations and Optimal Control Theory, Daniel Liberzon
+
+Optimal Control Theory for Applications, David G. Hull
+
+Applied Optimal Control, Arthur E. Bryson, Jr and Yu-Chi Ho
+
+Probabilistic Robotics, Sebastian Thrun, Wolfram Burgard, and Dieter Fox
+
+A Course in Robust Control Theory: a convex approach, Geir E. Dullerud and Fernando G. Paganini
+
+Robust and Adaptive Control with Aerospace Applications, Eugene Lavretsky and Kevin A. Wise
 
 ## Table of Context  
 
