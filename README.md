@@ -36,59 +36,59 @@ Landing Spacecraft - Christopher D'Souza. "An optimal guidance law for planetary
 ## Table of Context  
 
 ### Module 1 - Classical Control
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Module1-Introduction.html"> Introduction and 2D Car Model </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Module1-Introduction.html"> Introduction and 2D Car Model </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Frequency-Domain-Analysis.html"> Frequency Domain Analysis </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Frequency-Domain-Analysis.html"> Frequency Domain Analysis </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Controller-Design-Basics.html"> Controller Design Basics </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Controller-Design-Basics.html"> Controller Design Basics </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Root-Locus-Analysis.html"> Root Locus Analysis </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Root-Locus-Analysis.html"> Root Locus Analysis </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Our-First-Controller.html"> Our First Controller </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Our-First-Controller.html"> Our First Controller </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Extra-Simulating-The-World.html"> Extra: Simulating the World </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Extra-Simulating-The-World.html"> Extra: Simulating the World </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Project 1 - Adaptive Cruise Control </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Project 1 - Adaptive Cruise Control </a>
 
 ### Module 2 - Optimal Control
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Introduction </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Introduction </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Calculus-Of-Variations.html"> Calculus of Variations </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Calculus-Of-Variations.html"> Calculus of Variations </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Optimal-Control-Calculus-Of-Variations.html"> Optimal Control using Calculus of Variations </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Optimal-Control-Calculus-Of-Variations.html"> Optimal Control using Calculus of Variations </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/Maximum-Principle.html"> Maximum Principle </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/Maximum-Principle.html"> Maximum Principle </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/HJB.html"> Hamilton-Jacobi-Bellman Equation </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/HJB.html"> Hamilton-Jacobi-Bellman Equation </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/LQR.html"> The Linear Quadratic Regulator </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/LQR.html"> The Linear Quadratic Regulator </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Project 2 - Planetary Landing Guidance </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Project 2 - Planetary Landing Guidance </a>
 
 ### Module 3 - Optimal State Estimation
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Introduction </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Introduction </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Simple Estimator </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Simple Estimator </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Gaussian Filters </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Gaussian Filters </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Particle Filters </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Particle Filters </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Extra: Adaptive Filtering </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Extra: Adaptive Filtering </a>
 
 ### Module 4 - Advanced Topics, Robust and Adaptive Control
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Controllability </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Controllability </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Eigenvalue Assignment </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Eigenvalue Assignment </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Observability </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Observability </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> H2 Optimal Control </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> H2 Optimal Control </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Model Reference Adaptive Control </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Model Reference Adaptive Control </a>
 
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Robust Adaptive Control </a>
+<a href="https://gurgentus.github.io/Intro-Control-and-Etimation/UnderConstruction.html"> Robust Adaptive Control </a>
 
 </div>
