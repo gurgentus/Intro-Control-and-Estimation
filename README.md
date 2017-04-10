@@ -28,7 +28,7 @@ Robust and Adaptive Control with Aerospace Applications, Eugene Lavretsky and Ke
 ## Table of Context  
 
 ### Module 1 - Classical Control
-<a href="https://gurgentus.github.io/intro-control-and-estimation/UnderConstruction.html"> Introduction </a>
+<a href="https://gurgentus.github.io/intro-control-and-estimation/Module1-Introduction.html"> Introduction and 2D Car Model </a>
 
 <a href="https://gurgentus.github.io/intro-control-and-estimation/Frequency-Domain-Analysis.html"> Frequency Domain Analysis </a>
 
