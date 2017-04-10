@@ -21,17 +21,27 @@ title: Lecture Notes
   }
 </style>
 <h1>Introduction and 2D Car Model</h1>
-
-Control theory deals with studying and modifying the behavior of dynamical systems with inputs and outputs.  The actual system is usually referred to as <em>plant</em> and the system that decides on the input (possibly based on the observed output) is a <em>controller.</em> Our goal here is not to spend a lot of time on the full history or overview of this fascinating field that started with practical engineering problems and slowly gained its rigid mathematical structure, at the same time being pushed further and further by more and more complicated problems of engineering.
-
-Our study of control theory will be largely mathematical with examples drawn principally from problems in <em>autonomous vehicle control</em> and <em>air/spacecraft control</em>. Of course, one of the main benefits of concentrating on the mathematics is that everything you learn can be ported to studying problems in unrelated fields ranging from biology to social sciences to economics.
-
-With that let's delve straight into our fist <em>plant.  </em>Most of Module 1 will use a relatively simple model of a three degree of freedom car culminating with a project consisting of designing an adaptive cruise control for an autonomous vehicle.  (Preview: In Module 2 we will introduce a model for landing a spacecraft on a planet while minimizing the acceleration, stay tuned...)
-
+<p>
+Control theory deals with studying and modifying the behavior of dynamical systems with inputs and outputs.  The actual system is 
+usually referred to as <em>plant</em> and the system that decides on the input (possibly based on the observed output) is a 
+<em>controller.</em> Our goal here is not to spend a lot of time on the full history or overview of this fascinating field that 
+started with practical engineering problems and slowly gained its rigid mathematical structure, at the same time being pushed further 
+and further by more and more complicated problems of engineering.
+</p>
+<p>
+Our study of control theory will be largely mathematical with examples drawn principally from problems in <em>autonomous vehicle 
+control</em> and <em>air/spacecraft control</em>. Of course, one of the main benefits of concentrating on the mathematics is that 
+everything you learn can be ported to studying problems in unrelated fields ranging from biology to social sciences to economics.
+  </p>
+  <p>
+With that let's delve straight into our fist <em>plant.  </em>Most of Module 1 will use a relatively simple model of a three degree of
+freedom car culminating with a project consisting of designing an adaptive cruise control for an autonomous vehicle.  (Preview: 
+In Module 2 we will introduce a model for landing a spacecraft on a planet while minimizing the acceleration, stay tuned...)
+  </p>
 For now we remain on the ground, in fact assuming that this ground is completely flat, and describe the car with the following <em>state variables</em>: the position of its center of mass in the Cartesian coordinates, $x$, $y$, its angle of orientation, $\xi$, its velocity, $v$, and its mass, $m$. The inputs that can be controlled will be the amount of thrust applied, $\delta T$, the amount of breaking, $\delta B$, and the angle by which the front wheels are turned, $\delta w$. Below is a diagram summarizing this variables.
 
 (ADD PICTURE)
-
+<p>
 The next step is to derive a differential equation that describes  the dynamics. We'll start easy.  The velocity components in the $x$ and $y$ directions can be simply obtained as vector projections of $v$ onto the coordinate axis using trigonometry,
 $$
 x = v \cos(\xi),
@@ -44,7 +54,8 @@ $$
 \dot{m} = g(v, \delta T).
 $$
 This can be specified more explicitly depending on the properties of the actual car.
-
+  </p>
+  <p>
 Now for the more complicated pieces.  As is often the case with these kinds of problems, our best friend is Newton's Second law, $F = m a = m \dot{v}$, written in terms of the velocity $v$.  What are the different forces acting on the car?  To keep things a bit general we will assume that the total thrust provided by the car is $T(v, \delta T, \delta B)$, a function of the current velocity, as well as throttle and break amount. We also assume that the component of $T$ perpendicular to the tire has an equal friction force in the opposite direction to cancel it, leaving the parallel component, $T \cos(\delta w)$ as the net force (see the picture for the force diagram).  In turn, this force has components $T \cos(\delta w) \cos(\delta w)$ in the direction of forward acceleration, $\dot{v}$ and $T \cos(\delta w) \sin(\delta w)$ in the tangential direction.  It follows that,
 
 $$
