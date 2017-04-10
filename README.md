@@ -17,6 +17,8 @@ Optimal Control Theory for Applications, David G. Hull
 
 Applied Optimal Control, Arthur E. Bryson, Jr and Yu-Chi Ho
 
+"An optimal guidance law for planetary landing", Christopher D'Souza, paper, Guidance, Navigation, and Control Conference
+
 Probabilistic Robotics, Sebastian Thrun, Wolfram Burgard, and Dieter Fox
 
 A Course in Robust Control Theory: a convex approach, Geir E. Dullerud and Fernando G. Paganini
@@ -24,6 +26,12 @@ A Course in Robust Control Theory: a convex approach, Geir E. Dullerud and Ferna
 Robust and Adaptive Control with Aerospace Applications, Eugene Lavretsky and Kevin A. Wise
 
 Теория автоматического управления, Гольдфарб Л. С, Балтрушевич А. В., Нетушил А. В. и др.
+
+### Model References:
+
+2D Car model - I found the original system without the derivation in "Optimal Control and Estimation" by Robert F. Stengel.  After not finding a satisfying derivation of the equations in other references I derived it myself as shown in the first section below.  Interestingly, the right-hand side of the rate of orientation change turned out to be different from the original model in Stengel.
+
+Landing Spacecraft - Christopher D'Souza. "An optimal guidance law for planetary landing", Guidance, Navigation, and Control Conference, http://dx.doi.org/10.2514/6.1997-3709.  Thanks to Ronald Sostaric, NASA, for the suggestion of this paper, which is also used for the Module 2 project.
 
 ## Table of Context  
 
