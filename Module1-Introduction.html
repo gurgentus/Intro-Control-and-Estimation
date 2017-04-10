@@ -38,8 +38,13 @@ With that let's delve straight into our fist <em>plant.  </em>Most of Module 1
 freedom car culminating with a project consisting of designing an adaptive cruise control for an autonomous vehicle.  (Preview: 
 In Module 2 we will introduce a model for landing a spacecraft on a planet while minimizing the acceleration, stay tuned...)
   </p>
-For now we remain on the ground, in fact assuming that this ground is completely flat, and describe the car with the following <em>state variables</em>: the position of its center of mass in the Cartesian coordinates, $x$, $y$, its angle of orientation, $\xi$, its velocity, $v$, and its mass, $m$. The inputs that can be controlled will be the amount of thrust applied, $\delta T$, the amount of breaking, $\delta B$, and the angle by which the front wheels are turned, $\delta w$. Below is a diagram summarizing this variables.
-
+  <p>
+For now we remain on the ground, in fact assuming that this ground is completely flat, and describe the car with the following 
+<em>state variables</em>: the position of its center of mass in the Cartesian coordinates, $x$, $y$, its angle of orientation, 
+$\xi$, its velocity, $v$, and its mass, $m$. The inputs that can be controlled will be the amount of thrust applied, $\delta T$, 
+the amount of breaking, $\delta B$, and the angle by which the front wheels are turned, $\delta w$. Below is a diagram summarizing 
+this variables.
+  </p>
 (ADD PICTURE)
 <p>
 The next step is to derive a differential equation that describes  the dynamics. We'll start easy.  The velocity components in the $x$ and $y$ directions can be simply obtained as vector projections of $v$ onto the coordinate axis using trigonometry,
@@ -65,9 +70,9 @@ $$
 where the last term is the drag due to air resistance, often approximated with, $C_D \rho v^2 S/2$, where $C_D$ is the drag coefficient, $\rho$ is the density of air, $S$ is the area of the surface.  We'll keep this as $D(v)$ to keep things general.
 
 The effect of the tangential force $T \cos(\delta w) \sin(\delta w)$ is slightly more technical to derive using Newton's Law. To keep things relatively simple, we'll use a slightly different argument to obtain an expression for the angular velocity $\dot{\xi}$. Assume that in time $\Delta t$ the base of the car moved $v \Delta t$ in original direction, $\xi$, while the orientation $\xi$ changed by $\Delta \xi$ as shown in the zoomed in picture below
-
+  </p>
 (ADD PICTURE)
-
+<p>
 Then, using the law of sines from trigonometry yields
 
 $$
