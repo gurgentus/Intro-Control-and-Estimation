@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cloud Controls & Simulation Toolbox </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+    <!-- GUI -->
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+    <script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <!-- jquery.terminal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.6.0/js/jquery.terminal.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.6.0/css/jquery.terminal.min.css" rel="stylesheet"/>
+    <!-- Latest compiled and minified CSS -->
+
+    <script src="static/js/index.js"></script>
+    <script>keyboardeventKeyPolyfill.polyfill();</script>
+
+    <!-- bootstrap -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+
+    <!-- bokeh -->
+    <link rel="stylesheet"
+     href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.css"
+     type="text/css" />
+    <script type="text/javascript"
+     src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.js">
+    </script>
+    <script type="text/javascript">
+    Bokeh.set_log_level("info");
+    </script>
+
+    <!-- latex -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+         equationNumbers: {  autoNumber: "AMS"  },
+         extensions: ["AMSmath.js", "AMSsymbols.js", "autobold.js", "color.js"]
+      }
+    });
+    </script>
+    <script type="text/javascript"
+     src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <style>
+    /*.affix {
+    top: 20px;
+    }*/
+
+    .affix {
+      top: 20px;
+      width: 40%;
+    }
+
+    .affix-top {
+      /*width: 100%;*/
+    }
+
+    .affix-bottom {
+      /*width: 100%;
+      position: absolute;*/
+    }
+
+    #col1{
+      /*background:green;*/
+      max-width:600px !important;
+    }
+
+    #col2{
+      /*background:yellow;*/
+      max-width:600px !important;
+    }
+
+    .btn-file {
+       position: relative;
+       overflow: hidden;
+     }
+
+     .btn-file input[type=file] {
+       position: absolute;
+       top: 0;
+       right: 0;
+       min-width: 100%;
+       min-height: 100%;
+       font-size: 100px;
+       text-align: right;
+       filter: alpha(opacity=0);
+       opacity: 0;
+       outline: none;
+       background: white;
+       cursor: inherit;
+       display: block;
+     }
+    </style>
+  </head>
+  <body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+
+    <div class="container-fluid" style="background-color:#2196F3;color:#fff;height:220px;">
+      <h1>Cloud Controls & Simulation Toolbox</h1>
+      <!-- <h3>Fixed vertical sidenav on scroll</h3> -->
+      <p>The main controls and simulation functionality is natively implemented in python using python flask
+        framework for server side code. I implemented the mathematical computations using
+        standard python libraries like numpy and scipy. The terminal functionality is
+        done using JQuery Terminal.  Plotting uses the bokeh library.
+         In addition, I added ability
+      to execute octave commands and automatically manage the context, which right now works only if installed locally. </p>
+      <p> This project is under development, so many bugs may exist.  In particular, currently sessions are not managed
+      correctly so entered matrices and plots may not be saved. </p>
+      <p> For questions and bugs please email me at: greg.hayrapetyan AT gmail.com.
+    </div>
+    <br>
+
+    <div class="container page">
+        <div class="content">
+
+          <div class="container-fluid">
+            <div class="row">
+              <div id="col1" class="col-lg-6">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#general_tab" data-toggle="tab">General</a></li>
+                  <li><a href="#controls_tab" data-toggle="tab">Controls Toolbox</a></li>
+                  <li><a href="#scene_segment_tab" data-toggle="tab">Scene Segmentation</a></li>
+                </ul>
+                <div class="tab-content clearfix">
+
+                  <div class="tab-pane active" id="general_tab">
+                  <h1>Native Support</h1>
+                  <p> Commands <code>display</code> and <code>gdisplay</code> are used to display stored
+                    data to the console and graphical output displays respectively.
+                  <h1>Octave - warning: temporarily available only with local install </h1>
+                  <p>
+                  Type <code>octave</code> to switch to Octave command prompt for entering octave commands (Matlab syntax).
+                  </p>
+                  <p>
+                  At this point usual <mark>Octave</mark> commands will work.  For example,
+                  <code>
+                    A = [1,2;3,4]
+                  </code>
+                  defines a matrix.
+                  </p>
+                  <p>
+                  Leaving Octave using <code>exit</code> command returns to the CCST prompt.
+                </p>
+                <p>
+                  To display the matrix we can type <code>display A</code> or <code>gdisplay A</code> with the latter
+                  producing latex typeset rendering of the matrix in the graphical ouput pane.
+                </p>
+                <p> Matrices can also be entered using the CCST with python type syntax: <code> matrix [[1,2],[3,4]]</code>.
+                </div>
+                <div class="tab-pane" id="controls_tab">
+                  <h1> Controls System Commands </h1>
+                  <p>
+                  Let us analyze longitudinal dynamics representative of a transport aircraft, trimmed at \(V_0 = 250\) ft/s and
+                  flying at a low altitude.
+
+                  We linearized dynamics are given by the matrix
+                  $$
+                  A =
+                  \begin{pmatrix}
+                  -0.038 & 18.984 & 0 & -32.174 \\
+                  -0.001 & -0.632 & 1 & 0 \\
+                  0 & -0.759 & -0.518 & 0 \\
+                  0 & 0 & 1 & 0
+                  \end{pmatrix}
+                  $$
+                  To enter this matrix in CCST type <code> matrix A '[[-0.038, 18.984, 0, -32.174], [-0.001,-0.632, 1, 0],
+                  [0, -0.759, -0.518, 0], [0, 0, 1, 0]]'</code>
+                </p>
+                <p> We can enter <code> gdisplay A </code> to view the entered matrix in latex rendering under the terminal. In turn,
+                  <code> display A </code> will display A in the console.
+                </p>
+                <p> We can easily calculate eigenvectors and eigenvalues of A with the command <code> modes A V E </code>, where
+                  the last two arguments specify the variables were the results will be stored.
+                </p>
+                <p> Next, let us define a matrix \(B\) with control derivatives as follows:
+                  <code> matrix B '[[10.1, 0], [0, -0.0086], [0.025, -0.011], [0,0]]' </code>
+                </p>
+                <p>
+                Finally we will define two more matrices, \(C\) and \(D\) to complete our state space system with state feedback.
+                </p>
+                <p>
+                <code> matrix C '[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]'</code>
+                </p>
+                <p>
+                <code> matrix D '[[0, 0], [0, 0], [0, 0], [0, 0]]'</code>
+                </p>
+                <p>
+                Next, we define the state system with the command <code>ss A B C D G</code>.  The last argument
+                gives the name of the state system.  We can now graphically display the system with <code> gdisplay G </code>
+                </p>
+                Before connecting a feedback controller, let us simulate the angle of attack response to a step elevator command.
+                We first let the system know that the elevator is the second input and the angle of attack is the second output with commands:
+                </p>
+                <p>
+                  <code> control 2 G elevator</code>
+                </p>
+                <p>
+                  <code> output 2 G alpha</code>
+                </p>
+                <p>
+                Now we can simulate the response to a 0.5 radian elevator deflection for 5 seconds with:
+                <code> step alpha G elevator 0.5 5 alpha_plot</code> and view the result with <code>gdisplay alpha_plot</code>.
+              </p>
+              <p>
+              For a closed-loop system we define a controller in a standard space-state form with the command:
+              </p>
+              <p>
+              <code>controller A, B1, B2, C, D1, D2, K</code>
+              </p>
+              <p>
+              and arrange \(G\) and \(K\) into a feedback loop with:
+              </p>
+              <p>
+              <code>feedback G K G_cl</code>
+              </p>
+              <p>
+              Here, again the last argument gives a name to the resulting closed loop system.
+              </p>
+              <p>
+              To obtain response to initial conditions we can use the command:
+              </p>
+              <p>
+              <code>response alpha G '[[0],[0]]' '[[0]]', 5.0 closed_loop_plot</code>
+              </p>
+              <p>
+              Here the second argument specifies the initial conditions and the third argument specifies
+              the reference input.
+              </p>
+
+                </div>
+                <div class="tab-pane" id="scene_segment_tab">
+                  <h1>Uploading an Image</h1>
+                  <p> The first step is to upload an image to be analyzed. To do that expand the menu at the top right corner,
+                    above the console screen and upload an image.  Give a name to this image, for example `image1`.  This will be the handle for
+                    working with the image from the console.
+                  </p>
+                  <p>
+                  After uploading the file we can display the uploaded image with <code>gdisplay image1</code>.
+                  </p>
+                  <h1>
+                  Comning soon: scene segementation instructions.
+                  </h1>
+                </div>
+              </div>
+              </div>
+              <div id="col2" class="col-lg-6" id="myScrollspy">
+                <div class="embed-responsive embed-responsive-16by9" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+                  <p><object class="embed-responsive-item" data="https://ccst.herokuapp.com/" height='200'>
+                    <embed src="https://ccst.herokuapp.com/"/></object></p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <hr>
+
+        <footer class="footer">
+            <p>&copy; gurgentus</p>
+        </footer>
+
+    </div>
+
+  </body>
+</html>
