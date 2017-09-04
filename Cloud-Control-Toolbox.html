@@ -165,7 +165,7 @@
                 <div class="tab-pane" id="controls_tab">
                   <h1> Controls System Commands </h1>
                   <p>
-                  Let us analyze longitudinal dynamics representative of a transport aircraft, trimmed at \(V_0 = 250\) ft/s and
+                  Let us analyze longitudinal dynamics representative of a transport aircraft, trimmed at $V_0 = 250$ ft/s and
                   flying at a low altitude.
 
                   We linearized dynamics are given by the matrix
@@ -187,11 +187,11 @@
                 <p> We can easily calculate eigenvectors and eigenvalues of A with the command <code> modes A V E </code>, where
                   the last two arguments specify the variables were the results will be stored.
                 </p>
-                <p> Next, let us define a matrix \(B\) with control derivatives as follows:
+                <p> Next, let us define a matrix $B$ with control derivatives as follows:
                   <code> matrix B '[[10.1, 0], [0, -0.0086], [0.025, -0.011], [0,0]]' </code>
                 </p>
                 <p>
-                Finally we will define two more matrices, \(C\) and \(D\) to complete our state space system with state feedback.
+                Finally we will define two more matrices, $C$ and $D$ to complete our state space system with state feedback.
                 </p>
                 <p>
                 <code> matrix C '[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]'</code>
@@ -223,7 +223,7 @@
               <code>controller A, B1, B2, C, D1, D2, K</code>
               </p>
               <p>
-              and arrange \(G\) and \(K\) into a feedback loop with:
+              and arrange $G$ and $K$ into a feedback loop with:
               </p>
               <p>
               <code>feedback G K G_cl</code>
