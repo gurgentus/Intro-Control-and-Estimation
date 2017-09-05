@@ -166,11 +166,13 @@
                 <p> Matrices can also be entered using the CCST with python type syntax: <code> matrix [[1,2],[3,4]]</code>.
                 </div>
                 <div class="tab-pane" id="controls_tab">
-                  <h1> Controls System Commands </h1>
-                  <p>
+                <h1> Controls System Commands </h1>
+                <p>
                   Let us analyze longitudinal dynamics representative of a transport aircraft, trimmed at $V_0 = 250$ ft/s and
-                  flying at a low altitude.
-
+                  flying at a low altitude.  The example is taken from 'Robust and Adaptive Control: With Aerospace Applications' by
+                  by Eugene Lavretsky and Kevin Wise.
+                </p>
+                <p>
                   We linearized dynamics are given by the matrix
                   $$
                   A =
@@ -187,7 +189,7 @@
                 <p> We can enter <code> gdisplay A </code> to view the entered matrix in latex rendering under the terminal. In turn,
                   <code> display A </code> will display A in the console.
                 </p>
-                <p> We can easily calculate eigenvectors and eigenvalues of A with the command <code> modes A V E </code>, where
+                <p> To calculate eigenvectors and eigenvalues of A enter the command <code> modes A V E </code>, where
                   the last two arguments specify the variables were the results will be stored.
                 </p>
                 <p> Next, let us define a matrix $B$ with control derivatives as follows:
@@ -223,7 +225,7 @@
               For a closed-loop system we define a controller in a standard space-state form with the command:
               </p>
               <p>
-              <code>controller A, B1, B2, C, D1, D2, K</code>
+              <code>controller A B1 B2 C D1 D2 K</code>
               </p>
               <p>
               and arrange $G$ and $K$ into a feedback loop with:
