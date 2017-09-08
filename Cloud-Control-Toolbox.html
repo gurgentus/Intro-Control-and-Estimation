@@ -120,6 +120,7 @@
         framework for server side code. I implemented the mathematical computations using
         standard python libraries like numpy and scipy. The terminal functionality is
         done using JQuery Terminal.  Plotting uses the bokeh library.
+        For speed the orbital mechanics toolbox executes C++ code under the hood.
          In addition, I added ability
       to execute octave commands and automatically manage the context, which right now works only if installed locally. </p>
       <p> This project is under development, so many bugs may exist.  In particular, currently sessions are not managed
@@ -137,6 +138,7 @@
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#general_tab" data-toggle="tab">General</a></li>
                   <li><a href="#controls_tab" data-toggle="tab">Controls Toolbox</a></li>
+                  <li><a href="#orbital_tab" data-toggle="tab">Orbital Mechanics</a></li>
                   <li><a href="#scene_segment_tab" data-toggle="tab">Scene Segmentation</a></li>
                 </ul>
                 <div class="tab-content clearfix">
@@ -248,6 +250,33 @@
               </p>
 
                 </div>
+
+
+                <div class="tab-pane" id="orbital_tab">
+                  <h1> Orbital Mechanics Toolbox </h1>
+                  <p>
+                  The toolbox uses C++ code under the hood.  Due to missing boost libraries on the heroku
+                  server where the app is hosted, this functionality is temporarily available only with
+                  a local/network install.
+                </p>
+                  <h1>Labert Problem</h1>
+                  <p>
+                  Consider a satellite to be located at $r_1 = 5000 \hat{I} + 10000 \hat{J} + 2100 \hat{K}$ km.
+                  We want to design a trajectory that will put the satellite at $r_2 = -14600 \hat{I} + 2500 \hat{J} + 7000 \hat{K}$ km
+                  after one hour.  This is achieved by solving Labert's problem, by calling
+                  </p>
+                  <p>
+                  <code> lambert '[5000, 10000, 2100]' '[-14600, 2500, 7000]' 3600 True 398600 orbit1</code>
+                  </p>
+                  <p>
+                  Here we specified the two positions, time, whether we want the prograde trajectory, $\mu$, and a name to save the results under.
+                  To see the orbital elements associated with the calculated orbit we simply type:
+                  </p>
+                  <p>
+                    <code> gdisplay orbit1 </code>
+                  </p>
+                </div>
+
                 <div class="tab-pane" id="scene_segment_tab">
                   <h1>Uploading an Image</h1>
                   <p> The first step is to upload an image to be analyzed. To do that expand the menu at the top right corner,
