@@ -139,6 +139,7 @@
                   <li class="active"><a href="#general_tab" data-toggle="tab">General</a></li>
                   <li><a href="#controls_tab" data-toggle="tab">Controls Toolbox</a></li>
                   <li><a href="#orbital_tab" data-toggle="tab">Orbital Mechanics</a></li>
+                  <!-- <li><a href="#nums_tab" data-toggle="tab">Numerical Solvers</a></li> -->
                   <li><a href="#scene_segment_tab" data-toggle="tab">Scene Segmentation</a></li>
                 </ul>
                 <div class="tab-content clearfix">
@@ -255,9 +256,7 @@
                 <div class="tab-pane" id="orbital_tab">
                   <h1> Orbital Mechanics Toolbox </h1>
                   <p>
-                  The toolbox uses C++ code under the hood.  Due to missing boost libraries on the heroku
-                  server where the app is hosted, this functionality is temporarily available only with
-                  a local/network install.
+                  The toolbox uses C++ code under the hood.
                 </p>
                   <h1>Lambert's Problem</h1>
                   <p>
@@ -275,8 +274,66 @@
                   <p>
                     <code> gdisplay orbit1 </code>
                   </p>
-                </div>
+                  <h1> Optimal Circular Orbit Transfer </h1>
+                  <p>
+                    Consider establishing the optimal transfer trajectory to get from a given circular orbit around the earth
+                  to a different orbit in a given amount of time.
+                  Making simplifying assumptions of spherical, non-rotating Earth, assuming a constant thrust, constant mass flow,
+                  and neglecting forces other than the gravity of the earth this problem can be posed as finding the maximum of
+                </p>
+                  $$
+                  J = r(t_f),
+                  $$
+                  subject to
+                  $$
+                  \dot{r} = u,
+                  $$
+                  $$
+                  \dot{u} = \frac{\nu^2}{r} - \frac{\mu}{r^2} + \frac{T \sin \alpha}{m_0 - |\dot{m}|t}
+                  $$
+                  $$
+                  \dot{\nu} = -\frac{u \nu}{r} + \frac{T \cos\alpha}{m_0 - |\dot{m} t|}
+                  $$
+                  $$
+                  \dot{\theta} = \frac{\nu}{r}.
+                  $$
+                  <p>
+                  (See James M Longuski, José J. Guzmán, John E. Prussing, Optimal Control with Aerospace Applications-Springer-Verlag New York (2014))
+                </p>
+                  <p>
+                  This problem can be reduced to solving a boundary value problem.
+                  To solve the problem with $\mu = 3.986004418e5$,
+                  initial mass $m_0 = 1500 kg$, specific impulse $I_{sp} = 6000$, thrust $T = 20 N$,
+                  initial orbit radius $6678 km$ and final time $t_f = 10 hr = 36000$, we run
+                  </p>
+                  <p>
+                    <code> orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 36000 traj_plot </code>
+                  </p>
+                  <p>
+                  Solves the resulting problem using a three stage Lobatto collocation scheme.
+                  Similarly, we can run a more general collocation code by specifying the scheme at the end of the command:
+                  </p>
+                  <p>
+                    <code> orb_transfer 3.986004418e5 1500 6000 20 6678 36000 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot </code>
+                  </p>
+                  My implementation of this boundary value problem solver can be found here:
+                  <a href='https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp'> C++ Code </a>
+                  <p>
+                  The resulting plots can be displayed with
+                </p>
+                <p>
+                  <code> gdisplay traj_plot </code>
+                </p>
 
+                </div>
+                <div class="tab-pane" id="nums_tab">
+                  <h1>Collocation Method</h1>
+                  We consider a system of differential equations of the form
+                  $$ y' = f(t,y) $$
+                  $$ g(y(a), y(b)) = 0$$
+                  For fixed $t$ and $y$, let $A = \frac{\partial f}{\partial y}(t,y)$,
+                  $B_1 = \partial_1 g$, $B_2 = \partial_2 g$
+                </div>
                 <div class="tab-pane" id="scene_segment_tab">
                   <h1>Uploading an Image</h1>
                   <p> The first step is to upload an image to be analyzed. To do that expand the menu at the top right corner,
