@@ -303,17 +303,18 @@
                   This problem can be reduced to solving a boundary value problem.
                   To solve the problem with $\mu = 3.986004418e5$,
                   initial mass $m_0 = 1500 kg$, specific impulse $I_{sp} = 6000$, thrust $T = 20 N$,
-                  initial orbit radius $6678 km$, final time $t_f = 0.5$ days, and using 500 grid points we run
+                  initial orbit radius $6678 km$, final time $t_f = 0.5$ days, and using 5 hour timesteps and 500
+                  grid points for each timestep we run
                   </p>
                   <p>
-                    <code> orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 500 traj_plot </code>
+                    <code> orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot </code>
                   </p>
                   <p>
                   Solves the resulting problem using a three stage Lobatto collocation scheme.
                   Similarly, we can run a more general collocation code by specifying the scheme at the end of the command:
                   </p>
                   <p>
-                    <code> orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot </code>
+                    <code> orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot </code>
                   </p>
                   My implementation of this boundary value problem solver can be found here:
                   <a href='https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp'> C++ Code </a>
