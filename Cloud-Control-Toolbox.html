@@ -276,45 +276,93 @@
                   </p>
                   <h1> Optimal Circular Orbit Transfer </h1>
                   <p>
-                    Consider establishing the optimal transfer trajectory to get from a given circular orbit around the earth
-                  to a different orbit in a given amount of time.
-                  Making some simplifying assumptions this problem can be posed as finding the maximum of
+                    Consider establishing the optimal transfer trajectory to get
+                  from a given circular orbit around the earth
+                  to the largest possible orbit in a given amount of time.
+                  This problem can be posed as a classic optimal control
+                  problem of finding a minimum of a functional of the form
+                  $$
+                  J(u) := \int_{t_0}^{t_f} L(t,x(t),u(t)) \, dt + K(t_f, x_f),
+                  $$
+                  where the running cost $L \equiv 0$ and the terminal cost
+                  $K := r(t_f)$ is the final orbit radius.  Precisely,
                 </p>
                   $$
                   J = r(t_f),
                   $$
-                  subject to
+                  subject to the classic two-body equations of motion in polar coordinates
                   $$
-                  \dot{r} = u,
-                  $$
-                  $$
-                  \dot{u} = \frac{\nu^2}{r} - \frac{\mu}{r^2} + \frac{T \sin \alpha}{m_0 - |\dot{m}|t}
-                  $$
-                  $$
-                  \dot{\nu} = -\frac{u \nu}{r} + \frac{T \cos\alpha}{m_0 - |\dot{m} t|}
-                  $$
-                  $$
-                  \dot{\theta} = \frac{\nu}{r}.
+                  \begin{align}
+                  \dot{r} & = u, \\
+                  \dot{u} & = \frac{v^2}{r} - \frac{\mu}{r^2} + \frac{T \sin \alpha}{m_0 - |\dot{m}|t}, \\
+                  \dot{v} & = -\frac{u v}{r} + \frac{T \cos\alpha}{m_0 - |\dot{m} t|}, \\
+                  \dot{\theta} & = \frac{v}{r},
+                  \end{align}
                   $$
                   <p>
+                  where $r$ is the radial position of the vehicle, $u$ and $v$ are radial
+                  and tangential velocities, $T$ is the thrust applied at the angle of $\alpha$ radians.
+                  In addition, $m_0$ is the initial vehicle mass and $\dot{m}$ is the mass flow rate.
                   (See James M Longuski, José J. Guzmán, John E. Prussing, Optimal Control with Aerospace Applications-Springer-Verlag New York (2014))
-                </p>
+                  </p>
                   <p>
-                  This problem can be reduced to solving a boundary value problem.
+                  By the use of Pontryagin's Maximum Principle, this problem can be reduced to solving
+                  a boundary value problem
+                  $$
+                  \begin{align}
+                  \frac{d \bar{r}}{d \tau} & = \bar{u} \eta, \\
+                  \frac{d \bar{u}}{d \tau} & = \left( \frac{\bar{v}^2}{\bar{r} -
+                  \frac{1}{\bar{r}^2}} \right) \eta + \frac{\bar{T}}{m_0 - |\dot{m}| \tau t_f}
+                  \left( \frac{p_u}{\sqrt{p_u^2+p_{v}^2}} \right), \\
+                  \frac{d \bar{v}}{d \tau} & = \frac{\bar{u}{\bar{v}}{\bar{r}}}\eta
+                   + \frac{\bar{T}}{m_0 - |\dot{m}| \tau t_f}
+                  \left( \frac{p_{v}}{\sqrt{p_u^2+p_{v}^2}} \right), \\
+                  \frac{d \theta}{d \tau} & = \frac{\bar{v}{\bar{r}}} \eta, \\
+                  \frac{d p_r}{d \tau} & = p_u \left(\frac{\bar{v}^2}{\bar{r}^2}
+                  -\frac{2}{\bar{r}^3} \right) \eta - p_{v} \frac{\bar{u}{\bar{v}}}{\bar{r}^2} \eta
+                  + \frac{p_{\theta} \bar{v}}{\bar{r}^2} \eta, \\
+                  \frac{d p_u}{d \tau} & = -p_r \eta + \frac{p_{v} \bar{v}}{\bar{r}}, \\
+                  \frac{d p_v}{d \tau} & = -\frac{2 p_u v \eta}{\bar{r}} +
+                  \frac{p_{v} u \eta}{\bar{r}} - {p_{\theta} \eta}{\bar{r}},
+                  \end{align}
+                  $$
+                  for the rescaled variables
+                  $$
+                  \bar{r} = \frac{r}{r(0)}, \, \bar{u} = \frac{u}{v(0)}, \, \bar{v} = \frac{v}{v(0)},
+                  \, \tau = \frac{t}{t_f},
+                  $$
+                  the co-states $p_r, p_{\theta}, p_u, p_v$ and subject to the boundary conditions
+                  $$
+                  \begin{cases}
+                  \bar{r}_0(0) = 1, \, \bar{u}(0) = 0, \, \bar{v}(0)=1, \, \theta(0) = 0, \\
+                  \bar{u}(1) = 0, \, \bar{v}(1) = \sqrt{1/\bar{r}(1)}, \, 1 - p_r(1)
+                   + \frac{1}{2} p_v(1) \sqrt{1/\bar{r}^3(1)} = 0, \, p_{\theta}(1) = 0
+                  \end{cases}
+                  $$
                   To solve the problem with $\mu = 3.986004418e5$,
-                  initial mass $m_0 = 1500 kg$, specific impulse $I_{sp} = 6000$, thrust $T = 20 N$,
-                  initial orbit radius $6678 km$, final time $t_f = 0.5$ days, and using 5 hour timesteps and 500
+                  initial mass $m_0 = 1500$ kg, specific impulse $I_{sp} = 6000$, thrust $T = 20$ N,
+                  initial orbit radius $6678$ km, final time $t_f = 0.5$ days, and using 5 hour timesteps and 500
                   grid points for each timestep we run
                   </p>
                   <p>
-                    <code> orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot </code>
+                    <code>orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot </code>
                   </p>
                   <p>
-                  Solves the resulting problem using a three stage Lobatto collocation scheme.
-                  Similarly, we can run a more general collocation code by specifying the scheme at the end of the command:
+                  The above solves the problem using a three stage Lobatto collocation scheme.
+                  Similarly, we can run a more general collocation code by specifying the scheme at the end of the command.
+                  For example, to use a trapezoid scheme,
+                  $$
+                  \begin{array}{c|cc}
+                  0 & 0 & 0 \\
+                  1 & 1/2 & 1/2 \\
+                  \hline
+                    & 1/2 & 1/2
+                    \end{array}
+                  $$
+                  we can enter
                   </p>
                   <p>
-                    <code> orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot </code>
+                    <code>orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot </code>
                   </p>
                   My implementation of this boundary value problem solver can be found here:
                   <a href='https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp'> C++ Code </a>
@@ -322,9 +370,11 @@
                   The resulting plots can be displayed with
                 </p>
                 <p>
-                  <code> gdisplay traj_plot </code>
+                  <code> gdisplay traj_plot </code> and <code> gdisplay traj_plot_control </code>
                 </p>
-
+                <p>
+                  <img src="orbit_transfer.png"> </img>
+                </p>
                 </div>
                 <div class="tab-pane" id="nums_tab">
                   <h1>Collocation Method</h1>
