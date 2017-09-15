@@ -278,11 +278,12 @@
                   <p>
                     Consider establishing the optimal transfer trajectory to get
                   from a given circular orbit around the earth
-                  to the largest radial position in a given amount of time.
+                  to the largest radial position in a given amount of time using constant thrust
+                  and the thrust angle as the control.
                   This problem can be posed as a classic optimal control
                   problem of finding extrema of a functional of the form
                   $$
-                  J(u) := \int_{t_0}^{t_f} L(t,x(t),u(t)) \, dt + K(t_f, x_f),
+                  J(\alpha) := \int_{t_0}^{t_f} L(t,x(t),\alpha(t)) \, dt + K(t_f, x_f),
                   $$
                   where the running cost $L \equiv 0$ and the terminal cost
                   $K := r(t_f)$ is the final radial position.  Precisely,
