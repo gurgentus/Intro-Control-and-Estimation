@@ -266,7 +266,7 @@
                 As an example consider the image below:
                 </p>
                 <p>
-                  <img src="map1.jpeg"> </img>
+                  <img src="map1.jpeg" style="width:400px"> </img>
                 </p>
                 <p> To upload the image expand the menu at the top right corner,
                   above the console screen.  Give a name to this image, for example `map1`.
@@ -275,7 +275,7 @@
                 <p>
                 After uploading the file we can display the uploaded image with <code>gdisplay map1</code>.
                 To generate a grid by thresholding grayscale values of the image we can use
-                <code>generate_grid map1 10 10</code>
+                <code>generate_grid map1 15 15</code>
                 where map1 is the handle of the uploaded image and the last two parameters
                 specify the height and width of the grid.  The matrix representing the grid
                 will be saved under map1_grid name with values at each cell representing
@@ -287,22 +287,25 @@
                 run Dijkstra's algorithm we can enter:
               </p>
               <p>
-                 <code>generate_grid_obstacles map1_grid 20 map2_grid</code>
+                 <code>generate_grid_obstacles map1_grid 2 map2_grid</code>
                </p>
-               <p> This sets cells with value larger than 20 to 1 (representing obstacle region)
-                and cells with values less than or equal to 20 to 0 (representing free space).
+               <p> This sets cells with value larger than 2 to 1 (representing obstacle region)
+                and cells with values less than or equal to 2 to 0 (representing free space).
                 We can display the resulting matrix with:
               </p>
               <p>
                 <code>gdisplay map2_grid</code>
               </p>
               <p>
-              Finally, running <code>dijkstras map2_grid [5,0] [5,4]</code> finds a path
-              from the (5,0) position on the grid to the (5,4) position.
+              Finally, running <code>dijkstras map2_grid [11,0] [8,6]</code> finds a path
+              from the (11,0) position on the grid to the (8,6) position.
+              </p>
+              <p>
+                <img src="map2.png" style="width:400px"> </img>
               </p>
               <h1> Local Planner and 2D Car Dynamics</h1>
               <p>  Algorithms like Dijkstra's or RDT/RRT are often very useful as global path planners,
-                however there situations when dynamic constraints have to be taken into account.
+                however there are situations when dynamic constraints have to be taken into account.
                 There are several ways to model these dynamics.  One could
                 describe the car with the following
                <em>state variables</em>: the position of its center of mass in the Cartesian coordinates, $x$, $y$, its angle of orientation,
@@ -312,7 +315,7 @@
                  </p>
 
                <p>
-               The next step is to derive a differential equation that describes  the dynamics. The velocity components in the $x$ and $y$ directions can be simply obtained as vector projections of $v$ onto the coordinate axis using trigonometry,
+               The next step is to derive a differential equation that describes the dynamics. The velocity components in the $x$ and $y$ directions can be simply obtained as vector projections of $v$ onto the coordinate axis using trigonometry,
                $$
                \dot{x} = v \cos(\xi),
                $$
