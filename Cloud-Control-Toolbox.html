@@ -139,7 +139,7 @@
                   <li class="active"><a href="#general_tab" data-toggle="tab">General</a></li>
                   <li><a href="#controls_tab" data-toggle="tab">Controls </a></li>
                   <li><a href="#path_planning_tab" data-toggle="tab">Path Planning</a></li>
-                  <li><a href="#orbital_tab" data-toggle="tab">Orbital Mech.</a></li>
+                  <li><a href="#orbital_tab" data-toggle="tab">Orb. Mech.</a></li>
                   <!-- <li><a href="#nums_tab" data-toggle="tab">Numerical Solvers</a></li> -->
                   <li><a href="#scene_segment_tab" data-toggle="tab">Semantic Segm. </a></li>
                 </ul>
@@ -300,7 +300,81 @@
               Finally, running <code>dijkstras map2_grid [5,0] [5,4]</code> finds a path
               from the (5,0) position on the grid to the (5,4) position.
               </p>
+              <h1> Local Planner and 2D Car Dynamics</h1>
+              <p>  Algorithms like Dijkstra's or RDT/RRT are often very useful as global path planners,
+                however there situations when dynamic constraints have to be taken into account.
+                There are several ways to model these dynamics.  One could
+                describe the car with the following
+               <em>state variables</em>: the position of its center of mass in the Cartesian coordinates, $x$, $y$, its angle of orientation,
+               $\xi$, its velocity, $v$, and its mass, $m$. The inputs that can be controlled will be the amount of thrust applied, $\delta T$,
+               the amount of breaking, $\delta B$, and the angle by which the front wheels are turned, $\delta w$. Below is a diagram summarizing
+               this variables.
+                 </p>
 
+               <p>
+               The next step is to derive a differential equation that describes  the dynamics. The velocity components in the $x$ and $y$ directions can be simply obtained as vector projections of $v$ onto the coordinate axis using trigonometry,
+               $$
+               \dot{x} = v \cos(\xi),
+               $$
+               $$
+               \dot{y} = v \sin(\xi).
+               $$
+               We'll also assume that the mass changes as a function of velocity and the throttle, i.e.
+               $$
+               \dot{m} = g(v, \delta T).
+               $$
+               This can be specified more explicitly depending on the properties of the actual car.
+                 </p>
+                 <p>
+               Next we use Newton's Second law, $F = m a = m \dot{v}$, written in terms of the velocity $v$.  To keep things a
+               bit general we will assume that the total thrust provided by the car is $T(v, \delta T, \delta B)$, a function of the current velocity, as well as throttle and break amount. We also assume that the component of $T$ perpendicular to the tire has an equal friction force in the opposite direction to cancel it, leaving the parallel component, $T \cos(\delta w)$ as the net force (see the picture for the force diagram).  In turn, this force has components $T \cos(\delta w) \cos(\delta w)$ in the direction of forward acceleration, $\dot{v}$ and $T \cos(\delta w) \sin(\delta w)$ in the tangential direction.  It follows that,
+
+               $$
+               m \dot{v} = T \cos^2 (\delta w) - D(v),
+               $$
+
+               where the last term is the drag due to air resistance, often approximated with, $C_D \rho v^2 S/2$, where $C_D$ is the drag coefficient, $\rho$ is the density of air, $S$ is the area of the surface.  We'll keep this as $D(v)$ to keep things general.
+                 </p>
+                 <p>
+               The effect of the tangential force $T \cos(\delta w) \sin(\delta w)$ is slightly more technical to derive using Newton's Law. To keep things relatively simple, we'll use a slightly different argument to obtain an expression for the angular velocity $\dot{\xi}$. Assume that in time $\Delta t$ the base of the car moved $v \Delta t$ in original direction, $\xi$, while the orientation $\xi$ changed by $\Delta \xi$ as shown in the zoomed in picture below
+                 </p>
+
+               <p>
+               Then, using the law of sines from trigonometry yields
+
+               $$
+               \frac{l}{\sin(180-\delta w)} = \frac{l - v \Delta t}{\sin(\delta w - \Delta \xi)},
+               $$
+               or after simplification
+               \begin{equation}
+               \label{m2}
+               l \sin(\delta w - \Delta \xi) = l \sin(\delta w) - v \Delta t \sin(\delta w).
+               \end{equation}
+               Note that by the mean value theorem $\sin(\delta w) - \sin(\delta w - \Delta \xi) = \cos(\delta w_*) \Delta \xi$ for some value of $\delta w_*$ between $\delta w - \Delta \xi$ and $\delta w$.  Substituting the expression for $\sin(\delta w - \Delta \xi) $ into \eqref{m2} results in,
+               $$
+               l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t \sin(\delta w),
+               $$
+               or after simplification
+               $$
+               \frac{\Delta \xi}{\Delta t} = \frac{v}{l} \frac{\sin(\delta w)}{\cos(\delta w_*)}
+               $$
+               Finally, taking the limit as $\Delta t \rightarrow 0$ (and consequently $\delta w_* \rightarrow \delta w$), we have
+               $$
+               \frac{d \xi}{ dt} = \frac{v}{l} \tan(\delta w).
+               $$
+
+               <div class='bordered'>
+               Let's summarize our derived system of differential equations below,
+               $$
+               \begin{array}{ccc}
+               \dot{v} & = & \frac{T(v, \delta T, \delta B) \cos^2 (\delta w) - D(v)}{m}, \\
+               \dot{\xi} & = & \frac{v}{l} \tan(\delta w), \\
+               \dot{x} & = & v \cos(\xi), \\
+               \dot{y} & = & v \sin(\xi), \\
+               \dot{m} & = & g(v, \delta T).
+               \end{array}
+               $$
+               </div>
               </div>
 
                 <div class="tab-pane" id="orbital_tab">
