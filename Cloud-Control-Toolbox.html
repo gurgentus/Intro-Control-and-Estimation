@@ -381,10 +381,10 @@
               <h1> Optimal Stopping Control </h1>
               <p>
               To calculate the optimal control history to bring a car traveling
-              at 20 m/s to a complete stop in 100 m we can run
+              at 20 m/s to a complete stop in 500 m we can run
               </p>
               <p>
-              <code>generate_optimal_stop_traj 20 100 stop_plot </code>
+              <code>generate_optimal_stop_traj 20 500 stop_plot </code>
               </p>
              <h1> Minimum Jerk Trajectories </h1>
              <p>
@@ -393,7 +393,7 @@
               we can run
             </p>
             <p>
-              <code>generate_2d_traj '[-20, 0]' '[5, 0]' '[0, 0]' '[0, 4]' '[5, 0]' '[0, 0]' 5 stop_plot </code>
+              <code>generate_2d_traj '[-20, 0]' '[5, 0]' '[0, 0]' '[0, 4]' '[5, 0]' '[0, 0]' 5 lane_plot </code>
             </p>
               <p>
                 Here the arguments specify initial position $[x,y]$, initial velocity $[v_x, v_y]$, initial
