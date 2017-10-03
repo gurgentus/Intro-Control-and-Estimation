@@ -378,6 +378,28 @@
                \end{array}
                $$
                </div>
+              <h1> Optimal Stopping Control </h1>
+              <p>
+              To calculate the optimal control history to bring a car traveling
+              at 20 m/s to a complete stop in 100 m we can run
+              </p>
+              <p>
+              <code>generate_optimal_stop_traj 20 100 stop_plot </code>
+              </p>
+             <h1> Minimum Jerk Trajectories </h1>
+             <p>
+              To calculate a 5 second minimum jerk lane-change trajectory that takes a car traveling at 5m/s
+              to the lane 4 meters to the left at the position 20 meters ahead we can run:
+              we can run
+            </p>
+            <p>
+              <code>generate_2d_traj '[-20, 0]' '[5, 0]' '[0, 0]' '[0, 4]' '[5, 0]' '[0, 0]' 5 stop_plot </code>
+            </p>
+              <p>
+                Here the arguments specify initial position $[x,y]$, initial velocity $[v_x, v_y]$, initial
+                acceleration $[a_x, a_y]$, final position, final velocity, final accelereration, and the time to perform
+                the maneuver.
+              </p>
               </div>
 
                 <div class="tab-pane" id="orbital_tab">
