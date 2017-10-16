@@ -258,51 +258,6 @@
                   For speed the toolbox uses Python code for some of the functionality and
                   C++ code for other.
                 </p>
-                <h1>Dijkstra's Algorithm</h1>
-                <p>
-                One way to use Dijkstra's algorithm is to represent the map as a grid using
-                an $m$ by $n$ matrix.  To avoid entering a large matrix by hand the toolbox allows
-                to upload any image whose grayscale can be thresholded to produce the obstacles.
-                As an example consider the image below:
-                </p>
-                <p>
-                  <img src="map1.jpeg" style="width:400px"> </img>
-                </p>
-                <p> To upload the image expand the menu at the top right corner,
-                  above the console screen.  Give a name to this image, for example `map1`.
-                  This will be the handle for working with the image from the console.
-                </p>
-                <p>
-                After uploading the file we can display the uploaded image with <code>gdisplay map1</code>.
-                To generate a grid by thresholding grayscale values of the image we can use
-                <code>generate_grid map1 15 15</code>
-                where map1 is the handle of the uploaded image and the last two parameters
-                specify the height and width of the grid.  The matrix representing the grid
-                will be saved under map1_grid name with values at each cell representing
-                the grayscale value of the image.
-                </p>
-                <p>
-                  Entering <code>gdisplay map1_grid</code> displays this matrix.
-                To turn these values into free space and obstacle regions needed to
-                run Dijkstra's algorithm we can enter:
-              </p>
-              <p>
-                 <code>generate_grid_obstacles map1_grid 2 map2_grid</code>
-               </p>
-               <p> This sets cells with value larger than 2 to 1 (representing obstacle region)
-                and cells with values less than or equal to 2 to 0 (representing free space).
-                We can display the resulting matrix with:
-              </p>
-              <p>
-                <code>gdisplay map2_grid</code>
-              </p>
-              <p>
-              Finally, running <code>dijkstras map2_grid [11,0] [8,6] map_result</code> finds a path
-              from the (11,0) position on the grid to the (8,6) position.
-              </p>
-              <p>
-                <img src="map2.png" style="width:400px"> </img>
-              </p>
               <h1> Local Planner and 2D Car Dynamics</h1>
               <p>  Algorithms like Dijkstra's or RDT/RRT are often very useful as global path planners,
                 however there are situations when dynamic constraints have to be taken into account.
@@ -378,14 +333,6 @@
                \end{array}
                $$
                </div>
-              <h1> Optimal Stopping Control </h1>
-              <p>
-              To calculate the optimal control history to bring a car traveling
-              at 20 m/s to a complete stop in 500 m we can run
-              </p>
-              <p>
-              <code>generate_optimal_stop_traj 20 500 stop_plot </code>
-              </p>
              <h1> Minimum Jerk Trajectories </h1>
              <p>
               To calculate a 5 second minimum jerk lane-change trajectory that takes a car traveling at 5m/s
@@ -400,6 +347,27 @@
                 the maneuver.
               </p>
               <p>
+                In real world trajectory generation oftentimes it is not enough to simply generate one optimal trajectory.
+                In practice, one way to approach motion planning for lane changes or turns is to generate many possible trajectories
+                by varying the final conditions and then selecting the best trajectory based on a more complicated cost
+                function that could include, for example, distance to collisions, distance to the center of the lane, fuel consumption,
+                etc.  Running the command
+                <p>
+                <code> generate_2d_traj '[-20, 0]' '[5, 0]' '[0, 0]' '[0, 4]' '[5, 0]' '[0, 0]' 5 lane_plot 1000 True 20 </code>
+                </p>
+                <p>
+                generates 20 trajectories by varying the final velocities and positions, and chooses the best path
+                based on ensuring forward direction of motion and jerk minimization.  The additional parameters above
+                specify number of grid points (1000), a flag that specifies that many trajectories should be sampled (True),
+                and the number of trajectories to sample.
+              </p>
+              A sample result is shown below:
+              <p>
+                <img src="lane_change_traj.png" style="width:400px"> </img>
+              </p>
+
+              </p>
+              <p>
                 My implementation of these solvers can be found here:
                 <a href='https://github.com/gurgentus/ccst/blob/master/nums/Car.cpp'> C++ Code </a>
               </p>
@@ -411,6 +379,60 @@
               <p> For a more general collocation based bvp solver see:
               <a href='https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp'> C++ Code </a>
               </p>
+              <h1> Coming soon: $H^\infty$ Control for Trajectory Tracking </h1>
+              <h1> Optimal Stopping Control </h1>
+              <p>
+              To calculate the optimal control history to bring a car traveling
+              at 20 m/s to a complete stop in 500 m we can run
+              </p>
+              <p>
+              <code>generate_optimal_stop_traj 20 500 stop_plot </code>
+              </p>
+              <h1>Dijkstra's Algorithm</h1>
+              <p>
+              One way to use Dijkstra's algorithm is to represent the map as a grid using
+              an $m$ by $n$ matrix.  To avoid entering a large matrix by hand the toolbox allows
+              to upload any image whose grayscale can be thresholded to produce the obstacles.
+              As an example consider the image below:
+              </p>
+              <p>
+                <img src="map1.jpeg" style="width:400px"> </img>
+              </p>
+              <p> To upload the image expand the menu at the top right corner,
+                above the console screen.  Give a name to this image, for example `map1`.
+                This will be the handle for working with the image from the console.
+              </p>
+              <p>
+              After uploading the file we can display the uploaded image with <code>gdisplay map1</code>.
+              To generate a grid by thresholding grayscale values of the image we can use
+              <code>generate_grid map1 15 15</code>
+              where map1 is the handle of the uploaded image and the last two parameters
+              specify the height and width of the grid.  The matrix representing the grid
+              will be saved under map1_grid name with values at each cell representing
+              the grayscale value of the image.
+              </p>
+              <p>
+                Entering <code>gdisplay map1_grid</code> displays this matrix.
+              To turn these values into free space and obstacle regions needed to
+              run Dijkstra's algorithm we can enter:
+            </p>
+            <p>
+               <code>generate_grid_obstacles map1_grid 2 map2_grid</code>
+             </p>
+             <p> This sets cells with value larger than 2 to 1 (representing obstacle region)
+              and cells with values less than or equal to 2 to 0 (representing free space).
+              We can display the resulting matrix with:
+            </p>
+            <p>
+              <code>gdisplay map2_grid</code>
+            </p>
+            <p>
+            Finally, running <code>dijkstras map2_grid [11,0] [8,6] map_result</code> finds a path
+            from the (11,0) position on the grid to the (8,6) position.
+            </p>
+            <p>
+              <img src="map2.png" style="width:400px"> </img>
+            </p>
               <p>
               </div>
 
