@@ -1,0 +1,76 @@
+/* Custom styling for clean, academic look */
+
+/* Bordered boxes for important formulas (similar to your HTML) */
+.bordered {
+  padding: 20px;
+  border: 1px solid darkorange;
+  border-radius: 8px;
+  margin: 1em 0;
+  background-color: rgba(255, 140, 0, 0.03);
+}
+
+/* Math content styling */
+.arithmatex {
+  overflow-x: auto;
+}
+
+/* Green color for mathematical connections text */
+.math-connection {
+  color: green;
+  font-style: italic;
+}
+
+/* Content spacing */
+.md-content {
+  max-width: 1000px;
+}
+
+/* Code blocks with better contrast */
+.highlight {
+  border-radius: 4px;
+}
+
+/* Admonition customization for notes/warnings */
+.admonition {
+  border-left: 4px solid darkorange;
+}
+
+/* Link styling */
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Table styling for better readability */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Image styling */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+}
+
+/* Footnotes and references */
+.footnote {
+  font-size: 0.9em;
+  color: #666;
+}
