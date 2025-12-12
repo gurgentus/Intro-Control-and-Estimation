@@ -7,9 +7,9 @@ As such, the goal is twofold, first to introduce the more theory oriented studen
 
 In parallel, I am developing a Cloud based interactive Controls and Simulation Toolbox that can be accessed at:
 
-<a href="https://gurgentus.github.io/Intro-Control-and-Estimation/Cloud-Control-Toolbox.html"> CCST </a>
+**[Cloud Control Toolbox (CCST)](https://ccst-phi.vercel.app/)**
 
-Warning: These notes are a work in progress and I expect to have the full notes done by the end of Summer 2017.  Realistically, due to time constraints end of Module 3 and Module 4 would be taught as a second semester of the course.  
+Warning: These notes are a work in progress.  Realistically, due to time constraints end of Module 3 and Module 4 would be taught as a second semester of the course.  
 
 ### References:
 

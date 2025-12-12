@@ -1,0 +1,112 @@
+site_name: Control Theory and State Estimation
+site_description: Lecture notes for Control Theory and Estimation course taught at Ohio University
+site_author: Greg Hayrapetyan
+site_url: https://gurgentus.github.io/Intro-Control-and-Estimation/
+
+repo_name: gurgentus/Intro-Control-and-Estimation
+repo_url: https://github.com/gurgentus/Intro-Control-and-Estimation
+
+theme:
+  name: material
+  palette:
+    # Light mode - clean, academic look similar to jekyll-theme-dinky
+    - scheme: default
+      primary: white
+      accent: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode option
+    - scheme: slate
+      primary: blue grey
+      accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+# Extensions for math rendering and enhanced markdown
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+
+# MathJax configuration for LaTeX equations
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/gurgentus
+    - icon: fontawesome/solid/envelope
+      link: mailto:gurgentus@gmail.com
+
+# Navigation structure
+nav:
+  - Home: index.md
+  - Cloud Control Toolbox: cloud-control-toolbox.md
+  - Module 1 - Classical Control:
+      - Introduction and 2D Car Model: module1/introduction.md
+      - Frequency Domain Analysis: module1/frequency-domain-analysis.md
+      - Controller Design Basics: module1/controller-design-basics.md
+      - Root Locus Analysis: module1/root-locus-analysis.md
+      - Our First Controller: module1/our-first-controller.md
+      - "Extra: Simulating the World": module1/simulating-the-world.md
+      - Project 1 - Adaptive Cruise Control: module1/project.md
+  - Module 2 - Optimal Control:
+      - Introduction: module2/introduction.md
+      - Calculus of Variations: module2/calculus-of-variations.md
+      - Optimal Control using Calculus of Variations: module2/optimal-control-cov.md
+      - Maximum Principle: module2/maximum-principle.md
+      - Hamilton-Jacobi-Bellman Equation: module2/hjb.md
+      - Linear Quadratic Regulator: module2/lqr.md
+      - Project 2 - Planetary Landing Guidance: module2/project.md
+  - Module 3 - State Estimation:
+      - Introduction: module3/introduction.md
+      - Simple Estimator: module3/simple-estimator.md
+      - Gaussian Filters: module3/gaussian-filters.md
+      - Particle Filters: module3/particle-filters.md
+      - "Extra: Adaptive Filtering": module3/adaptive-filtering.md
+  - Module 4 - Advanced Topics:
+      - Controllability: module4/controllability.md
+      - Eigenvalue Assignment: module4/eigenvalue-assignment.md
+      - Observability: module4/observability.md
+      - H2 Optimal Control: module4/h2-optimal-control.md
+      - Model Reference Adaptive Control: module4/mrac.md
+      - Robust Adaptive Control: module4/robust-adaptive-control.md
+
+# Custom CSS for additional styling
+extra_css:
+  - stylesheets/extra.css

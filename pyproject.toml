@@ -1,0 +1,10 @@
+[project]
+name = "intro-control-and-estimation"
+version = "0.1.0"
+description = "Lecture notes for Control Theory and Estimation course"
+requires-python = ">=3.9"
+dependencies = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.0",
+]

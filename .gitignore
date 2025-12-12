@@ -1,1 +1,6 @@
 _site/
+site/
+
+# uv
+.venv/
+uv.lock
