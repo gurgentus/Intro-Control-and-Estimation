@@ -74,3 +74,79 @@ img {
   font-size: 0.9em;
   color: #666;
 }
+
+/* Two-column layout for Cloud Control Toolbox page */
+.ccst-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+.ccst-tabs {
+  grid-column: 1;
+  min-width: 0; /* Prevent grid blowout */
+}
+
+.ccst-iframe {
+  grid-column: 2;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+}
+
+/* Ensure iframe is responsive */
+.ccst-iframe iframe {
+  width: 100%;
+  min-height: 800px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.ccst-iframe h2 {
+  margin-top: 0;
+}
+
+/* On smaller screens, stack vertically */
+@media (max-width: 1200px) {
+  .ccst-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ccst-tabs,
+  .ccst-iframe {
+    grid-column: 1;
+  }
+
+  .ccst-iframe {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* Enhance tabbed content styling */
+.tabbed-set {
+  margin: 20px 0;
+}
+
+.tabbed-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.tabbed-labels > label {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  transition: background-color 0.2s;
+}
+
+.tabbed-content {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 0 4px 4px 4px;
+  background-color: var(--md-code-bg-color);
+}
