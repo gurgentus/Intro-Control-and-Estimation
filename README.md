@@ -1,15 +1,15 @@
 # Control Theory and State Estimation
 
-Lecture notes for the class I taught on Control Theory and Estimation at Ohio University in Spring 2017.
+Lecture notes on Control Theory and Estimation based on a class I taught in the Department of Mathematics at Ohio University.
 
-This tutorial contains a set of notes I created for a special topics course in control theory and state estimation for applied math majors. Control theory is a perfect ‘capstone’ course for advance undergraduates as it combines rigorous mathematics of optimization, differential equations, dynamical systems, linear algebra, calculus of variations, probability, and other more theoretical areas of mathematics with practical use of computer programming, numerical methods and engineering applications.
+Control theory combines rigorous mathematics of optimization, differential equations, dynamical systems, linear algebra, calculus of variations, probability, and other more theoretical areas of mathematics with practical use of computer programming, numerical methods and engineering applications.
 As such, the goal is twofold, first to introduce the more theory oriented students to the beautiful world of engineering applications in control theory, a perfect example of the use of the higher level mathematics in the `real world’, and second, to give a sound theoretical footing to those students that are more applied and engineering oriented.
 
 In parallel, I am developing a Cloud based interactive Controls and Simulation Toolbox that can be accessed at:
 
 **[Cloud Control Toolbox (CCST)](https://ccst-phi.vercel.app/)**
 
-Warning: These notes are a work in progress.  Realistically, due to time constraints end of Module 3 and Module 4 would be taught as a second semester of the course.  
+Warning: These notes are a work in progress.
 
 ### References:
 

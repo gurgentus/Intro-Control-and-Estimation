@@ -176,3 +176,22 @@ $$
 $$
 
 for $k > 0$ and $k < 0$ respectively.
+
+!!! tip "Try It in CCST"
+    Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to visualize poles and zeros of transfer functions. For the double integrator plant $T_o(s) = 1/s^2$:
+
+    ```
+    ss [[0,1],[0,0]] [[0],[1]] [[1,0]] [[0]] -> dbl_int
+    poles dbl_int -> ol_poles
+    gdisplay ol_poles
+    ```
+
+    Add proportional feedback and see how the poles move:
+
+    ```
+    feedback dbl_int 4 -> dbl_cl
+    poles dbl_cl -> cl_poles
+    gdisplay cl_poles
+    ```
+
+    Add `zeros` to also show zeros: `poles dbl_int zeros -> pz_plot`. Try varying the gain to trace out the root locus and observe the asymptote angles predicted by the theory above.

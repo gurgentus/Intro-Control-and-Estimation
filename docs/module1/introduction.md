@@ -98,3 +98,14 @@ $$
 $$
 
 </div>
+
+!!! tip "Try It in CCST"
+    You can define nonlinear dynamics like the 2D car model directly in the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md). For example, define a simplified version (constant mass, no drag) and simulate it:
+
+    ```
+    dynamics "[x[2]*np.cos(x[1]), x[2]/1.0*np.tan(u[0]), (u[1]*np.cos(u[0])**2)/1000]" 3 2 -> car2d
+    sim car2d x0:[0,0,10] t:5 u:[0.1,500] -> car_sim
+    gdisplay car_sim
+    ```
+
+    The `dynamics` command takes a Python expression for $\dot{x} = f(x, u)$, the state dimension, and the input dimension. Then `sim` runs a numerical simulation using the Runge-Kutta method discussed in the next lesson.

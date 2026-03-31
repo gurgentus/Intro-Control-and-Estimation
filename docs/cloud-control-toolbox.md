@@ -44,77 +44,10 @@
   }
 }
 
-/* Page-specific grid layout */
+/* Single-column layout — iframe below content */
 .md-content__inner {
-  display: grid;
-  grid-template-columns: 600px 1fr;
-  gap: 30px;
-  align-items: start;
+  display: block;
   max-width: 100% !important;
-}
-
-.md-content__inner > h1:first-child {
-  grid-column: 1 / -1;
-  order: 1;
-}
-
-.md-content__inner > .tabbed-set {
-  grid-column: 1;
-  order: 2;
-}
-
-.md-content__inner > #interactive-toolbox-section {
-  grid-column: 2;
-  order: 2;
-  position: sticky;
-  top: 80px;
-  height: fit-content;
-  max-height: 100vh;
-}
-
-.md-content__inner > hr {
-  grid-column: 1 / -1;
-  order: 3;
-  width: 100%;
-  clear: both;
-}
-
-.md-content__inner > h2 {
-  grid-column: 1 / -1;
-  order: 4;
-  width: 100%;
-  max-width: 100%;
-}
-
-.md-content__inner > p {
-  grid-column: 1 / -1;
-  order: 5;
-  width: 100%;
-  max-width: 100%;
-}
-
-.md-content__inner > .admonition {
-  grid-column: 1 / -1;
-  order: 6;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-  .md-content__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .md-content__inner > .tabbed-set,
-  .md-content__inner > #interactive-toolbox-section {
-    grid-column: 1;
-  }
-
-  .md-content__inner > #interactive-toolbox-section {
-    position: relative;
-    top: 0;
-  }
 }
 </style>
 
@@ -122,40 +55,40 @@
 
 === "About"
 
-    The main controls and simulation functionality is natively implemented in Python using Python Flask framework for server side code. The mathematical computations are implemented using standard Python libraries like NumPy and SciPy. The terminal functionality uses jQuery Terminal, and plotting uses the Bokeh library. For speed, the orbital mechanics toolbox executes C++ code under the hood. In addition, there is ability to execute Octave commands and automatically manage the context, which currently works only with local install.
+    The Cloud Controls & Simulation Toolbox (CCST) is a browser-based environment for controls engineering, simulation, and orbital mechanics. The backend is built with Python (FastAPI), using NumPy and SciPy for mathematical computations. The frontend terminal uses jQuery Terminal with Bokeh for interactive plotting. Simulations can run locally or as distributed ROS2 nodes in Docker or Kubernetes, with optional 3D visualization via Foxglove Studio.
 
-    !!! warning
-        This project is under development, so many bugs may exist. In particular, currently sessions are not managed correctly so entered matrices and plots may not be saved.
+    All commands use **arrow syntax** to name outputs: `command args -> output_name`. Use `gdisplay` to view any stored variable (matrices, systems, plots, 3D scenes). Scripts (`.ccst` files) can be run with the `run` command.
 
     !!! info "Contact"
         For questions and bugs please email: greg.hayrapetyan AT gmail.com
 
 === "General"
 
-    ### Native Support
+    ### Matrices and Display
 
-    Commands `display` and `gdisplay` are used to display stored data to the console and graphical output displays respectively.
-
-    ### Octave Integration
-
-    !!! warning
-        Octave support is temporarily available only with local install
-
-    Type `octave` to switch to Octave command prompt for entering Octave commands (Matlab syntax).
-
-    At this point usual **Octave** commands will work. For example:
-    ```matlab
-    A = [1,2;3,4]
+    Define a matrix using MATLAB-style or JSON syntax:
     ```
-    defines a matrix.
-
-    Leaving Octave using `exit` command returns to the CCST prompt.
-
-    To display the matrix we can type `display A` or `gdisplay A` with the latter producing LaTeX typeset rendering of the matrix in the graphical output pane.
-
-    Matrices can also be entered using the CCST with Python type syntax:
+    matrix '[1 2; 3 4]' -> A
+    matrix '[[1,2],[3,4]]' -> A
     ```
-    matrix [[1,2],[3,4]]
+
+    Display variables with `gdisplay A` (graphical LaTeX rendering) or `display A` (console text).
+
+    Calculate eigenvectors and eigenvalues:
+    ```
+    modes A -> V E
+    ```
+
+    Set display precision (0-16 decimal places, or `full`):
+    ```
+    precision 6
+    ```
+
+    ### Running Scripts
+
+    Execute a `.ccst` script file (lines starting with `#` are comments):
+    ```
+    run example.ccst
     ```
 
 === "Controls"
@@ -177,75 +110,364 @@
     \end{pmatrix}
     $$
 
-    To enter this matrix in CCST type:
+    To enter this matrix in CCST:
     ```
-    matrix A '[[-0.038, 18.984, 0, -32.174], [-0.001,-0.632, 1, 0], [0, -0.759, -0.518, 0], [0, 0, 1, 0]]'
+    matrix '[[-0.038, 18.984, 0, -32.174], [-0.001,-0.632, 1, 0], [0, -0.759, -0.518, 0], [0, 0, 1, 0]]' -> A
     ```
 
-    We can enter `gdisplay A` to view the entered matrix in LaTeX rendering under the terminal. In turn, `display A` will display A in the console.
+    View the matrix with `gdisplay A`.
 
-    To calculate eigenvectors and eigenvalues of A enter the command:
+    Calculate eigenvectors and eigenvalues:
     ```
-    modes A V E
+    modes A -> V E
     ```
-    where the last two arguments specify the variables where the results will be stored.
 
     #### Control Matrices
 
-    Next, let us define a matrix $B$ with control derivatives as follows:
+    Define the input, output, and feedthrough matrices:
     ```
-    matrix B '[[10.1, 0], [0, -0.0086], [0.025, -0.011], [0,0]]'
-    ```
-
-    Finally we will define two more matrices, $C$ and $D$ to complete our state space system with state feedback:
-    ```
-    matrix C '[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]'
-    matrix D '[[0, 0], [0, 0], [0, 0], [0, 0]]'
+    matrix '[[10.1, 0], [0, -0.0086], [0.025, -0.011], [0,0]]' -> B
+    matrix '[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]' -> C
+    matrix '[[0, 0], [0, 0], [0, 0], [0, 0]]' -> D
     ```
 
     #### Creating State-Space System
 
-    Next, we define the state system with the command:
+    Define the state-space system ($\dot{x} = Ax + Bu$, $y = Cx + Du$):
     ```
-    ss A B C D G
+    ss A B C D -> G
     ```
-    The last argument gives the name of the state system. We can now graphically display the system with `gdisplay G`.
+
+    View the system with `gdisplay G`. Generate a block diagram with:
+    ```
+    diagram G -> G_diagram
+    gdisplay G_diagram
+    ```
+
+    #### Labeling States, Inputs, and Outputs
+
+    Label the second input as "elevator" and the second output as "alpha":
+    ```
+    control 2 G -> elevator
+    output 2 G -> alpha
+    ```
+
+    States can also be labeled:
+    ```
+    state 1 G -> position
+    state 2 G -> velocity
+    ```
 
     #### Simulation
 
-    Before connecting a feedback controller, let us simulate the angle of attack response to a step elevator command. We first let the system know that the elevator is the second input and the angle of attack is the second output with commands:
+    Simulate the step response to a 0.5 radian elevator deflection for 5 seconds:
+    ```
+    step alpha G elevator 0.5 5 -> alpha_plot
+    gdisplay alpha_plot
+    ```
 
+    Simulate response to initial conditions with a constant input:
     ```
-    control 2 G elevator
-    output 2 G alpha
+    response alpha G '[[0],[0]]' '[[0]]' 5.0 -> response_plot
+    gdisplay response_plot
     ```
-
-    Now we can simulate the response to a 0.5 radian elevator deflection for 5 seconds with:
-    ```
-    step alpha G elevator 0.5 5 alpha_plot
-    ```
-    and view the result with `gdisplay alpha_plot`.
 
     #### Closed-Loop Control
 
-    For a closed-loop system we define a controller in a standard state-space form with the command:
+    Define a controller and arrange into a feedback loop:
     ```
-    controller A B1 B2 C D1 D2 K
-    ```
-
-    and arrange $G$ and $K$ into a feedback loop with:
-    ```
-    feedback G K G_cl
+    controller A B1 B2 C D1 D2 -> K
+    feedback G K -> G_cl
     ```
 
-    Here, again the last argument gives a name to the resulting closed loop system.
+    #### PID Control
 
-    To obtain response to initial conditions we can use the command:
+    Wrap a PID controller around a plant output:
     ```
-    response alpha G '[[0],[0]]' '[[0]]' 5.0 closed_loop_plot
+    pid G alpha 1.0 0.5 0.1 -> G_pid
+    ```
+    where the arguments are: plant, output name, $K_p$, $K_i$, $K_d$.
+
+    #### Transfer Functions and Poles
+
+    Compute the transfer function and plot poles:
+    ```
+    tf G -> G_tf
+    poles G -> pole_plot
+    gdisplay pole_plot
     ```
 
-    Here the second argument specifies the initial conditions and the third argument specifies the reference input.
+    Add `zeros` to also show zeros: `poles G zeros -> pz_plot`.
+
+=== "Modern Control"
+
+    ### LQR, Kalman, and LQG
+
+    #### LQR State Feedback
+
+    Design an optimal state feedback gain by solving the algebraic Riccati equation. Define weighting matrices $Q$ (state cost) and $R$ (control cost):
+    ```
+    matrix '[10 0; 0 1]' -> Q
+    matrix '[1]' -> R
+    lqr G Q R -> K_lqr
+    ```
+
+    Form the closed-loop system with state feedback ($u = r - Kx$):
+    ```
+    statefb G K_lqr -> G_cl
+    ```
+
+    Check closed-loop stability:
+    ```
+    poles G_cl -> cl_poles
+    gdisplay cl_poles
+    ```
+
+    #### Kalman Filter
+
+    Define a stochastic system with process and measurement noise:
+    ```
+    stochastic G G_noise Qn Rn -> G_stoch
+    ```
+    where `G_noise` is the noise input matrix, `Qn` is process noise covariance, `Rn` is measurement noise covariance.
+
+    Design the optimal Kalman filter gain:
+    ```
+    kalman G_stoch -> L
+    ```
+
+    Create an observer (state estimator):
+    ```
+    observer G_stoch L -> obs
+    ```
+
+    #### LQG Controller
+
+    Combine LQR state feedback and Kalman observer into an LQG controller:
+    ```
+    lqg G G_cl obs -> G_lqg
+    ```
+
+    #### System Augmentation
+
+    Add an integrator on an output (for zero steady-state error):
+    ```
+    integrate G alpha -> G_aug
+    ```
+
+    Add a tracking error output ($e = r - y$):
+    ```
+    error G alpha -> G_err
+    ```
+
+    Add saturation (actuator limits):
+    ```
+    saturation G -1.0 1.0 -> G_sat
+    ```
+
+    Expose an internal signal as a plottable output:
+    ```
+    signal G u -> G_sig
+    ```
+
+    Create a linear combination of outputs:
+    ```
+    combine G 1.0 x -0.5 y combined -> G_comb
+    ```
+
+    #### Cascade Control
+
+    Build inner/outer loop cascade architecture:
+    ```
+    cascade outer_cl inner_cl Pmode -> G_cascade
+    ```
+
+=== "Simulation"
+
+    ### General Simulation
+
+    The `sim` command simulates any system (linear or nonlinear) with flexible input options.
+
+    #### Basic Simulation
+
+    Simulate a system from initial conditions for a given duration:
+    ```
+    sim G x0:[1,0,0,0] t:10 -> sim_plot
+    gdisplay sim_plot
+    ```
+
+    Specify a constant input and timestep:
+    ```
+    sim G x0:[0,0] t:5 u:[0.5] dt:0.01 -> sim_plot
+    ```
+
+    Plot specific outputs by name:
+    ```
+    sim G x0:[0,0,0,0] t:10 dt:0.1 alpha theta -> sim_plot
+    ```
+
+    #### Nonlinear Dynamics
+
+    Define arbitrary nonlinear systems using Python/NumPy expressions:
+    ```
+    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1]]" 2 -> pendulum
+    ```
+
+    This defines a damped pendulum: $\dot{\theta} = \omega$, $\dot{\omega} = -\sin(\theta) - 0.1\omega$.
+
+    Simulate it:
+    ```
+    sim pendulum x0:[2.5,0] t:15 -> pendulum_sim
+    gdisplay pendulum_sim
+    ```
+
+    Systems with inputs:
+    ```
+    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1] + u[0]]" 2 1 -> forced_pendulum
+    sim forced_pendulum x0:[0,0] t:10 u:[0.5] -> forced_sim
+    ```
+
+    #### Scheduled Inputs
+
+    Use `target` and `chain` to create piecewise input schedules (see Rendezvous & Docking tab), then pass them to `sim`:
+    ```
+    sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -> traj
+    ```
+
+    #### 3D Visualization
+
+    Create an interactive 3D scene from simulation results:
+    ```
+    scene3d sim_result x y z -> scene
+    gdisplay scene
+    ```
+
+    The scene includes a trajectory trail, play/pause controls, and orbit camera.
+
+=== "RDV & Docking"
+
+    ### Rendezvous and Docking
+
+    CCST includes a complete set of tools for spacecraft proximity operations using Clohessy-Wiltshire (CW) relative motion dynamics.
+
+    #### Setup: CW Plant
+
+    Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit ($n = 0.00113$ rad/s):
+    ```
+    run rdv_setup.ccst
+    ```
+
+    This creates `cw_plant` (6-state linear system), an LQR controller `K_rdv`, and the closed-loop system `rdv_cl`.
+
+    #### Closed-Loop Rendezvous
+
+    Simulate a V-bar approach from 1 km behind and 100 m below:
+    ```
+    sim rdv_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -> vbar_pos
+    gdisplay vbar_pos
+    scene3d vbar_pos -> vbar_3d
+    gdisplay vbar_3d
+    ```
+
+    #### Two-Impulse Targeting
+
+    Solve for the impulsive burns needed to transfer between two states:
+    ```
+    target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 -> phase1
+    ```
+
+    For finite-duration burns (e.g., 30-second burns):
+    ```
+    target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -> phase1
+    ```
+
+    For thrust-limited burns:
+    ```
+    target cw_plant x0:[0,0,0.05,0,0,0] xf:[0,0,0,0,0,0] t:2780 thrust:0.001 -> phase1
+    ```
+
+    #### Multi-Phase Docking
+
+    Chain multiple targeting phases with hold points:
+    ```
+    target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -> phase1
+    target cw_plant x0:[0,-0.2,0,0,0,0] xf:[0,-0.02,0,0,0,0] t:800 duration:30 -> phase2
+    target cw_plant x0:[0,-0.02,0,0,0,0] xf:[0,-0.006,0,0,0,0] t:400 duration:20 -> phase3
+
+    chain phase1 hold:300 phase2 hold:200 phase3 -> docking_sched
+    ```
+
+    Simulate the complete approach:
+    ```
+    sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -> docking_traj
+    gdisplay docking_traj
+    scene3d docking_traj -> docking_3d
+    gdisplay docking_3d
+    ```
+
+    Run the full docking scenario:
+    ```
+    run rdv_docking.ccst
+    ```
+
+    #### Available RDV Scripts
+
+    | Script | Scenario |
+    |--------|----------|
+    | `rdv_setup.ccst` | CW plant + LQR controller setup |
+    | `rdv_vbar.ccst` | V-bar approach with LQR |
+    | `rdv_outofplane.ccst` | Out-of-plane correction |
+    | `rdv_ellipse.ccst` | Safety ellipse departure |
+    | `rdv_targeting.ccst` | Two-impulse open-loop targeting |
+    | `rdv_finitethrust.ccst` | Finite-thrust maneuver |
+    | `rdv_attitude.ccst` | Attitude control |
+    | `rdv_coupled.ccst` | Coupled translation + attitude cascade |
+    | `rdv_docking.ccst` | Multi-phase docking with finite burns |
+    | `rendezvous.ccst` | Run all scenarios sequentially |
+
+=== "ROS2 & Foxglove"
+
+    ### ROS2 Distributed Simulation
+
+    The `ros2_sim` command runs a simulation as distributed ROS2 nodes, with each block in the system's block diagram running as a separate node. This supports real-time pacing and 3D visualization via Foxglove Studio.
+
+    #### Basic ROS2 Simulation
+
+    ```
+    ros2_sim G x0:[1,0,0,0] t:10 dt:0.01 -> ros2_result
+    ```
+
+    #### Foxglove Visualization
+
+    Add the `foxglove` flag to publish visualization markers:
+    ```
+    ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -> docking_ros2
+    ```
+
+    Parameters:
+
+    - `foxglove`: enable Foxglove bridge on `ws://localhost:8765`
+    - `rtf:<factor>`: real-time factor (0 = fast as possible, 1 = real-time, 10 = 10x speed)
+    - `scale:<factor>`: position scaling for visualization (default 1000, i.e. km to m)
+    - `frame:<var>:<parent>:<child>`: add TF frame transforms
+
+    Connect [Foxglove Studio](https://studio.foxglove.dev) to `ws://localhost:8765` to view the 3D visualization in real time.
+
+    #### Managing Simulations
+
+    List running simulations:
+    ```
+    ros2_ps
+    ```
+
+    Stop all running simulations:
+    ```
+    ros2_stop
+    ```
+
+    #### Kubernetes Deployment
+
+    When deployed to Kubernetes (`CCST_SIM_BACKEND=k8s`), simulations run as K8s Jobs with S3-based data transfer. The system automatically handles job creation, data upload/download, and cleanup. See the [K8s Deployment Guide](https://github.com/gurgentus/ccst) for setup instructions.
 
 === "Path Planning"
 

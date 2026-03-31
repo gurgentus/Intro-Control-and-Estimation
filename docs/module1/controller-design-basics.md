@@ -148,3 +148,28 @@ D(s) = 0.
 $$
 
 This is the question of the next lecture.
+
+!!! tip "Try It in CCST"
+    Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to explore the mass-spring-damper system from the exercises above. For example, with $m=1$, $\beta=0.5$, $\kappa=4$ ($\omega=2$, $\xi=0.125$):
+
+    ```
+    ss [[0,1],[-4,-0.5]] [[0],[1]] [[1,0]] [[0]] -> msd
+    tf msd -> msd_tf
+    poles msd -> msd_poles
+    gdisplay msd_poles
+    ```
+
+    Simulate the step response to see the underdamped oscillation:
+
+    ```
+    step y msd u 1.0 20 -> msd_step
+    gdisplay msd_step
+    ```
+
+    Try changing $\beta$ to see overdamped ($\xi > 1$) and critically damped ($\xi = 1$) behavior. Then add proportional feedback and observe how the poles move:
+
+    ```
+    feedback msd 5 -> msd_cl
+    poles msd_cl -> cl_poles
+    gdisplay cl_poles
+    ```

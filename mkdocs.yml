@@ -78,7 +78,6 @@ extra:
 # Navigation structure
 nav:
   - Home: index.md
-  - Cloud Control Toolbox: cloud-control-toolbox.md
   - Module 1 - Classical Control:
       - Introduction and 2D Car Model: module1/introduction.md
       - Frequency Domain Analysis: module1/frequency-domain-analysis.md
@@ -108,6 +107,7 @@ nav:
       - H2 Optimal Control: module4/h2-optimal-control.md
       - Model Reference Adaptive Control: module4/mrac.md
       - Robust Adaptive Control: module4/robust-adaptive-control.md
+  - Cloud Control Toolbox: cloud-control-toolbox.md
 
 # Custom CSS for additional styling
 extra_css:

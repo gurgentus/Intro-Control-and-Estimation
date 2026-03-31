@@ -214,3 +214,22 @@ $$
 relating the single input to single output in the frequency domain. Again, leave this expression in the form above, just add what $T(s)$ is separately.
 
 </div>
+
+!!! tip "Try It in CCST"
+    Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to define state-space systems and compute transfer functions. For example, for the car model linearized about constant thrust with steering as the single input:
+
+    ```
+    ss [[0,1,0],[0,0,1],[0,0,0]] [[0],[0],[1]] [[0,1,0]] [[0]] -> car_lin
+    tf car_lin -> car_tf
+    poles car_lin -> car_poles
+    gdisplay car_poles
+    ```
+
+    Simulate the step response to see the open-loop behavior:
+
+    ```
+    step xi car_lin dw 0.1 10 -> steer_resp
+    gdisplay steer_resp
+    ```
+
+    The `ss` command takes $F$, $G$, $H$, $D$ matrices directly, matching the state-space form $\dot{x} = Fx + Gu$, $y = Hx + Du$ from this lecture.

@@ -198,3 +198,22 @@ $$
 </div>
 
 Compared to the iteration formula that we obtained with Runge-Kutta algorithm, the above solution is exact even if $\Delta t$ is large. Of course it is only valid if $F$, $G$, and $u$ are constant on the interval.
+
+!!! tip "Try It in CCST"
+    The [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) implements both simulation methods discussed above. Define a linear system and simulate it:
+
+    ```
+    ss [[0,1],[0,0]] [[0],[1]] [[1,0]] [[0]] -> double_int
+    sim double_int x0:[0,0] t:5 u:[1] -> sim_plot
+    gdisplay sim_plot
+    ```
+
+    For nonlinear systems, CCST uses Runge-Kutta integration automatically:
+
+    ```
+    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1]]" 2 -> pendulum
+    sim pendulum x0:[2.5,0] t:15 -> pend_sim
+    gdisplay pend_sim
+    ```
+
+    Try varying the timestep `dt` and initial conditions to observe how the numerical solution behaves.

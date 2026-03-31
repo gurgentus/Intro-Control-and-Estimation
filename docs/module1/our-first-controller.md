@@ -193,6 +193,25 @@ $$
 
 </div>
 
+!!! tip "Try It in CCST"
+    Define the 1D car plant and design a PID controller in the toolbox below:
+
+    ```
+    ss [[0,1],[0,0]] [[0],[1]] [[1,0]] [[0]] -> car1d
+    pid car1d y 1.0 0.5 0.0 -> car_pid
+    poles car_pid -> pid_poles
+    gdisplay pid_poles
+    ```
+
+    Simulate the closed-loop step response to track a position setpoint:
+
+    ```
+    step y car_pid ref 1.0 20 -> pid_step
+    gdisplay pid_step
+    ```
+
+    Try tuning $k_p$, $k_i$, $k_d$ to see their effect on overshoot and settling time. For example, compare a PI controller (`pid car1d y 1.0 0.5 0.0`) with a PID controller (`pid car1d y 1.0 0.5 0.3`).
+
 You can check your work using the interactive Cloud Control Toolbox:
 
 <iframe src="https://ccst-phi.vercel.app/" width="100%" height="800" frameborder="0" style="border: 1px solid #ddd; border-radius: 4px;" allowfullscreen></iframe>
