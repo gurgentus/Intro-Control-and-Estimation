@@ -5,11 +5,31 @@ Lecture notes on Control Theory and Estimation based on a class I taught in the 
 Control theory combines rigorous mathematics of optimization, differential equations, dynamical systems, linear algebra, calculus of variations, probability, and other more theoretical areas of mathematics with practical use of computer programming, numerical methods and engineering applications.
 As such, the goal is twofold, first to introduce the more theory oriented students to the beautiful world of engineering applications in control theory, a perfect example of the use of the higher level mathematics in the `real world’, and second, to give a sound theoretical footing to those students that are more applied and engineering oriented.
 
+Warning: These notes are a work in progress.
+
 In parallel, I am developing a Cloud based interactive Controls and Simulation Toolbox that can be accessed at:
 
 **[Cloud Control Toolbox (CCST)](https://ccst-phi.vercel.app/)**
 
-Warning: These notes are a work in progress.
+It can be used for high-fidelity simulation, integrating open-source libraries (e.g. Drake) for optimal control calculations (mixed integer programming, semidefinite programming) within a containerized SIL environment. See below for some examples of problems solved with CCST.
+When visualizing with ROS, the nodes are run using Kubernetes and a tool like Foxglove can be used for visualization.
+
+### Examples
+
+<div class="video-showcase">
+  <div class="video-card">
+    <video autoplay loop muted playsinline>
+      <source src="videos/rocket_landing_cl.mp4" type="video/mp4">
+    </video>
+    <p>Optimal powered descent guidance with closed-loop LQR tracking</p>
+  </div>
+  <div class="video-card">
+    <video autoplay loop muted playsinline>
+      <source src="videos/rdv_docking.mp4" type="video/mp4">
+    </video>
+    <p>Rendezvous and docking with TVLQG guidance</p>
+  </div>
+</div>
 
 ### References:
 
@@ -94,5 +114,3 @@ Landing Spacecraft - Christopher D'Souza. "An optimal guidance law for planetary
 <a href="https://gurgentus.github.io/Intro-Control-and-Estimation/module4/mrac/"> Model Reference Adaptive Control </a>
 
 <a href="https://gurgentus.github.io/Intro-Control-and-Estimation/module4/robust-adaptive-control/"> Robust Adaptive Control </a>
-
-</div>
