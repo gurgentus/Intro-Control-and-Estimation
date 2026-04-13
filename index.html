@@ -453,6 +453,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1541,6 +1552,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1647,9 +1669,27 @@
 <p>Lecture notes on Control Theory and Estimation based on a class I taught in the Department of Mathematics at Ohio University.</p>
 <p>Control theory combines rigorous mathematics of optimization, differential equations, dynamical systems, linear algebra, calculus of variations, probability, and other more theoretical areas of mathematics with practical use of computer programming, numerical methods and engineering applications.
 As such, the goal is twofold, first to introduce the more theory oriented students to the beautiful world of engineering applications in control theory, a perfect example of the use of the higher level mathematics in the `real world’, and second, to give a sound theoretical footing to those students that are more applied and engineering oriented.</p>
+<p>Warning: These notes are a work in progress.</p>
 <p>In parallel, I am developing a Cloud based interactive Controls and Simulation Toolbox that can be accessed at:</p>
 <p><strong><a href="https://ccst-phi.vercel.app/">Cloud Control Toolbox (CCST)</a></strong></p>
-<p>Warning: These notes are a work in progress.</p>
+<p>It can be used for high-fidelity simulation, integrating open-source libraries (e.g. Drake) for optimal control calculations (mixed integer programming, semidefinite programming) within a containerized SIL environment. See below for some examples of problems solved with CCST.
+When visualizing with ROS, the nodes are run using Kubernetes and a tool like Foxglove can be used for visualization.</p>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<div class="video-showcase">
+  <div class="video-card">
+    <video autoplay loop muted playsinline>
+      <source src="videos/rocket_landing_cl.mp4" type="video/mp4">
+    </video>
+    <p>Optimal powered descent guidance with closed-loop LQR tracking</p>
+  </div>
+  <div class="video-card">
+    <video autoplay loop muted playsinline>
+      <source src="videos/rdv_docking.mp4" type="video/mp4">
+    </video>
+    <p>Rendezvous and docking with TVLQG guidance</p>
+  </div>
+</div>
+
 <h3 id="references">References:<a class="headerlink" href="#references" title="Permanent link">&para;</a></h3>
 <p>Optimal Control and Estimation, Robert F. Stengel</p>
 <p>Calculus of Variations and Optimal Control Theory, Daniel Liberzon</p>
@@ -1693,7 +1733,6 @@ As such, the goal is twofold, first to introduce the more theory oriented studen
 <p><a href="https://gurgentus.github.io/Intro-Control-and-Estimation/module4/h2-optimal-control/"> H2 Optimal Control </a></p>
 <p><a href="https://gurgentus.github.io/Intro-Control-and-Estimation/module4/mrac/"> Model Reference Adaptive Control </a></p>
 <p><a href="https://gurgentus.github.io/Intro-Control-and-Estimation/module4/robust-adaptive-control/"> Robust Adaptive Control </a></p>
-</div>
 
 
 

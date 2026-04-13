@@ -75,6 +75,36 @@ img {
   color: #666;
 }
 
+/* Video showcase grid */
+.video-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.video-showcase .video-card {
+  text-align: center;
+}
+
+.video-showcase video {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.video-showcase .video-card p {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .video-showcase {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Two-column layout for Cloud Control Toolbox page */
 .ccst-layout {
   display: grid;
