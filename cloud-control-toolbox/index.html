@@ -2917,25 +2917,65 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 </code></pre></div></p>
 <h4 id="nonlinear-dynamics">Nonlinear Dynamics<a class="headerlink" href="#nonlinear-dynamics" title="Permanent link">&para;</a></h4>
 <p>Define arbitrary nonlinear systems using Python/NumPy expressions:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>dynamics &quot;[x[1], -np.sin(x[0]) - 0.1*x[1]]&quot; 2 -&gt; pendulum
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>dynamics f:&quot;[x[1], -np.sin(x[0]) - 0.1*x[1]]&quot; n:2 -&gt; pendulum
 </code></pre></div></p>
 <p>This defines a damped pendulum: <span class="arithmatex">\(\dot{\theta} = \omega\)</span>, <span class="arithmatex">\(\dot{\omega} = -\sin(\theta) - 0.1\omega\)</span>.</p>
+<p>The key:value arguments are:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f:</code></td>
+<td>yes</td>
+<td>State derivative expression <span class="arithmatex">\(\dot{x} = f(x, u)\)</span></td>
+</tr>
+<tr>
+<td><code>n:</code></td>
+<td>yes</td>
+<td>Number of states</td>
+</tr>
+<tr>
+<td><code>m:</code></td>
+<td>no</td>
+<td>Number of inputs (default: 0)</td>
+</tr>
+<tr>
+<td><code>p:</code></td>
+<td>no</td>
+<td>Number of outputs (default: n)</td>
+</tr>
+<tr>
+<td><code>y:</code></td>
+<td>no</td>
+<td>Output expression <span class="arithmatex">\(y = g(x, u)\)</span> (default: full state)</td>
+</tr>
+</tbody>
+</table>
 <p>Simulate it:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sim pendulum x0:[2.5,0] t:15 -&gt; pendulum_sim
 <a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>gdisplay pendulum_sim
 </code></pre></div></p>
 <p>Systems with inputs:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>dynamics &quot;[x[1], -np.sin(x[0]) - 0.1*x[1] + u[0]]&quot; 2 1 -&gt; forced_pendulum
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>dynamics f:&quot;[x[1], -np.sin(x[0]) - 0.1*x[1] + u[0]]&quot; n:2 m:1 -&gt; forced_pendulum
 <a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>sim forced_pendulum x0:[0,0] t:10 u:[0.5] -&gt; forced_sim
+</code></pre></div></p>
+<p>Systems with a custom output map (e.g., the 11-state rocket with 9 measured outputs):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>dynamics f:&quot;[x[3], x[4], x[5], ...]&quot; n:11 m:3 p:9 y:&quot;[x[0], x[1], ...]&quot; -&gt; rocket
 </code></pre></div></p>
 <h4 id="scheduled-inputs">Scheduled Inputs<a class="headerlink" href="#scheduled-inputs" title="Permanent link">&para;</a></h4>
 <p>Use <code>target</code> and <code>chain</code> to create piecewise input schedules (see Rendezvous &amp; Docking tab), then pass them to <code>sim</code>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -&gt; traj
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -&gt; traj
 </code></pre></div></p>
 <h4 id="3d-visualization">3D Visualization<a class="headerlink" href="#3d-visualization" title="Permanent link">&para;</a></h4>
 <p>Create an interactive 3D scene from simulation results:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>scene3d sim_result x y z -&gt; scene
-<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>gdisplay scene
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>scene3d sim_result x y z -&gt; scene
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>gdisplay scene
 </code></pre></div></p>
 <p>The scene includes a trajectory trail, play/pause controls, and orbit camera.</p>
 </div>
@@ -2944,42 +2984,42 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 <p>CCST includes a complete set of tools for spacecraft proximity operations using Clohessy-Wiltshire (CW) relative motion dynamics.</p>
 <h4 id="setup-cw-plant">Setup: CW Plant<a class="headerlink" href="#setup-cw-plant" title="Permanent link">&para;</a></h4>
 <p>Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit (<span class="arithmatex">\(n = 0.00113\)</span> rad/s):
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>run rdv_setup.ccst
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>run rdv_setup.ccst
 </code></pre></div></p>
 <p>This creates <code>cw_plant</code> (6-state linear system), an LQR controller <code>K_rdv</code>, and the closed-loop system <code>rdv_cl</code>.</p>
 <h4 id="closed-loop-rendezvous">Closed-Loop Rendezvous<a class="headerlink" href="#closed-loop-rendezvous" title="Permanent link">&para;</a></h4>
 <p>Simulate a V-bar approach from 1 km behind and 100 m below:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>sim rdv_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -&gt; vbar_pos
-<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>gdisplay vbar_pos
-<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>scene3d vbar_pos -&gt; vbar_3d
-<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>gdisplay vbar_3d
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sim rdv_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -&gt; vbar_pos
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>gdisplay vbar_pos
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>scene3d vbar_pos -&gt; vbar_3d
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>gdisplay vbar_3d
 </code></pre></div></p>
 <h4 id="two-impulse-targeting">Two-Impulse Targeting<a class="headerlink" href="#two-impulse-targeting" title="Permanent link">&para;</a></h4>
 <p>Solve for the impulsive burns needed to transfer between two states:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 -&gt; phase1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 -&gt; phase1
 </code></pre></div></p>
 <p>For finite-duration burns (e.g., 30-second burns):
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -&gt; phase1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -&gt; phase1
 </code></pre></div></p>
 <p>For thrust-limited burns:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>target cw_plant x0:[0,0,0.05,0,0,0] xf:[0,0,0,0,0,0] t:2780 thrust:0.001 -&gt; phase1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>target cw_plant x0:[0,0,0.05,0,0,0] xf:[0,0,0,0,0,0] t:2780 thrust:0.001 -&gt; phase1
 </code></pre></div></p>
 <h4 id="multi-phase-docking">Multi-Phase Docking<a class="headerlink" href="#multi-phase-docking" title="Permanent link">&para;</a></h4>
 <p>Chain multiple targeting phases with hold points:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -&gt; phase1
-<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>target cw_plant x0:[0,-0.2,0,0,0,0] xf:[0,-0.02,0,0,0,0] t:800 duration:30 -&gt; phase2
-<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>target cw_plant x0:[0,-0.02,0,0,0,0] xf:[0,-0.006,0,0,0,0] t:400 duration:20 -&gt; phase3
-<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>
-<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>chain phase1 hold:300 phase2 hold:200 phase3 -&gt; docking_sched
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>target cw_plant x0:[-0.1,-1.0,0,0,0,0] xf:[0,-0.2,0,0,0,0] t:1400 duration:30 -&gt; phase1
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>target cw_plant x0:[0,-0.2,0,0,0,0] xf:[0,-0.02,0,0,0,0] t:800 duration:30 -&gt; phase2
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>target cw_plant x0:[0,-0.02,0,0,0,0] xf:[0,-0.006,0,0,0,0] t:400 duration:20 -&gt; phase3
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>chain phase1 hold:300 phase2 hold:200 phase3 -&gt; docking_sched
 </code></pre></div></p>
 <p>Simulate the complete approach:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -&gt; docking_traj
-<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>gdisplay docking_traj
-<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>scene3d docking_traj -&gt; docking_3d
-<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>gdisplay docking_3d
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 x y z -&gt; docking_traj
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>gdisplay docking_traj
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>scene3d docking_traj -&gt; docking_3d
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>gdisplay docking_3d
 </code></pre></div></p>
 <p>Run the full docking scenario:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>run rdv_docking.ccst
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>run rdv_docking.ccst
 </code></pre></div></p>
 <h4 id="available-rdv-scripts">Available RDV Scripts<a class="headerlink" href="#available-rdv-scripts" title="Permanent link">&para;</a></h4>
 <table>
@@ -3037,11 +3077,11 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 <h3 id="ros2-distributed-simulation">ROS2 Distributed Simulation<a class="headerlink" href="#ros2-distributed-simulation" title="Permanent link">&para;</a></h3>
 <p>The <code>ros2_sim</code> command runs a simulation as distributed ROS2 nodes, with each block in the system's block diagram running as a separate node. This supports real-time pacing and 3D visualization via Foxglove Studio.</p>
 <h4 id="basic-ros2-simulation">Basic ROS2 Simulation<a class="headerlink" href="#basic-ros2-simulation" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>ros2_sim G x0:[1,0,0,0] t:10 dt:0.01 -&gt; ros2_result
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ros2_sim G x0:[1,0,0,0] t:10 dt:0.01 -&gt; ros2_result
 </code></pre></div>
 <h4 id="foxglove-visualization">Foxglove Visualization<a class="headerlink" href="#foxglove-visualization" title="Permanent link">&para;</a></h4>
 <p>Add the <code>foxglove</code> flag to publish visualization markers:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -&gt; docking_ros2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -&gt; docking_ros2
 </code></pre></div></p>
 <p>Parameters:</p>
 <ul>
@@ -3053,10 +3093,10 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 <p>Connect <a href="https://studio.foxglove.dev">Foxglove Studio</a> to <code>ws://localhost:8765</code> to view the 3D visualization in real time.</p>
 <h4 id="managing-simulations">Managing Simulations<a class="headerlink" href="#managing-simulations" title="Permanent link">&para;</a></h4>
 <p>List running simulations:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ros2_ps
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>ros2_ps
 </code></pre></div></p>
 <p>Stop all running simulations:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>ros2_stop
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ros2_stop
 </code></pre></div></p>
 <h4 id="kubernetes-deployment">Kubernetes Deployment<a class="headerlink" href="#kubernetes-deployment" title="Permanent link">&para;</a></h4>
 <p>When deployed to Kubernetes (<code>CCST_SIM_BACKEND=k8s</code>), simulations run as K8s Jobs with S3-based data transfer. The system automatically handles job creation, data upload/download, and cleanup. See the <a href="https://github.com/gurgentus/ccst">K8s Deployment Guide</a> for setup instructions.</p>
@@ -3115,13 +3155,13 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 \]</div>
 <h4 id="minimum-jerk-trajectories">Minimum Jerk Trajectories<a class="headerlink" href="#minimum-jerk-trajectories" title="Permanent link">&para;</a></h4>
 <p>To calculate a 5 second minimum jerk lane-change trajectory that takes a car traveling at 5m/s to the lane 4 meters to the left at the position 20 meters ahead we can run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot
 </code></pre></div>
 <p>Here the arguments specify initial position <span class="arithmatex">\([x,y]\)</span>, initial velocity <span class="arithmatex">\([v_x, v_y]\)</span>, initial acceleration <span class="arithmatex">\([a_x, a_y]\)</span>, final position, final velocity, final acceleration, and the time to perform the maneuver.</p>
 <h5 id="multiple-trajectory-generation">Multiple Trajectory Generation<a class="headerlink" href="#multiple-trajectory-generation" title="Permanent link">&para;</a></h5>
 <p>In real world trajectory generation oftentimes it is not enough to simply generate one optimal trajectory. In practice, one way to approach motion planning for lane changes or turns is to generate many possible trajectories by varying the final conditions and then selecting the best trajectory based on a more complicated cost function that could include, for example, distance to collisions, distance to the center of the lane, fuel consumption, etc.</p>
 <p>Running the command:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot 1000 True 20
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot 1000 True 20
 </code></pre></div></p>
 <p>generates 20 trajectories by varying the final velocities and positions, and chooses the best path based on ensuring forward direction of motion and jerk minimization. The additional parameters above specify number of grid points (1000), a flag that specifies that many trajectories should be sampled (True), and the number of trajectories to sample.</p>
 <div class="admonition info">
@@ -3132,7 +3172,7 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 </div>
 <h4 id="optimal-stopping-control">Optimal Stopping Control<a class="headerlink" href="#optimal-stopping-control" title="Permanent link">&para;</a></h4>
 <p>To calculate the optimal control history to bring a car traveling at 20 m/s to a complete stop in 500 m we can run:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>generate_optimal_stop_traj 20 500 stop_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>generate_optimal_stop_traj 20 500 stop_plot
 </code></pre></div></p>
 <h4 id="dijkstras-algorithm">Dijkstra's Algorithm<a class="headerlink" href="#dijkstras-algorithm" title="Permanent link">&para;</a></h4>
 <p>One way to use Dijkstra's algorithm is to represent the map as a grid using an <span class="arithmatex">\(m\)</span> by <span class="arithmatex">\(n\)</span> matrix. To avoid entering a large matrix by hand the toolbox allows to upload any image whose grayscale can be thresholded to produce the obstacles.</p>
@@ -3146,19 +3186,19 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 </li>
 <li>
 <p><strong>Generate Grid</strong>: To generate a grid by thresholding grayscale values of the image we can use:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>generate_grid map1 15 15
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>generate_grid map1 15 15
 </code></pre></div>
    where <code>map1</code> is the handle of the uploaded image and the last two parameters specify the height and width of the grid. The matrix representing the grid will be saved under <code>map1_grid</code> name with values at each cell representing the grayscale value of the image.</p>
 </li>
 <li>
 <p><strong>Create Obstacles</strong>: Entering <code>gdisplay map1_grid</code> displays this matrix. To turn these values into free space and obstacle regions needed to run Dijkstra's algorithm we can enter:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>generate_grid_obstacles map1_grid 2 map2_grid
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>generate_grid_obstacles map1_grid 2 map2_grid
 </code></pre></div>
    This sets cells with value larger than 2 to 1 (representing obstacle region) and cells with values less than or equal to 2 to 0 (representing free space). We can display the resulting matrix with <code>gdisplay map2_grid</code>.</p>
 </li>
 <li>
 <p><strong>Run Dijkstra's</strong>: Finally, running the following finds a path from the (11,0) position on the grid to the (8,6) position:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>dijkstras map2_grid [11,0] [8,6] map_result
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>dijkstras map2_grid [11,0] [8,6] map_result
 </code></pre></div></p>
 </li>
 </ol>
@@ -3168,10 +3208,10 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 <p>The toolbox uses C++ code under the hood for performance.</p>
 <h4 id="lamberts-problem">Lambert's Problem<a class="headerlink" href="#lamberts-problem" title="Permanent link">&para;</a></h4>
 <p>Consider a satellite to be located at <span class="arithmatex">\(r_1 = 5000 \hat{I} + 10000 \hat{J} + 2100 \hat{K}\)</span> km. We want to design a trajectory that will put the satellite at <span class="arithmatex">\(r_2 = -14600 \hat{I} + 2500 \hat{J} + 7000 \hat{K}\)</span> km after one hour. This is achieved by solving Lambert's problem, by calling:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>lambert &#39;[5000, 10000, 2100]&#39; &#39;[-14600, 2500, 7000]&#39; 3600 True 398600 orbit1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>lambert &#39;[5000, 10000, 2100]&#39; &#39;[-14600, 2500, 7000]&#39; 3600 True 398600 orbit1
 </code></pre></div>
 <p>Here we specified the two positions, time, whether we want the prograde trajectory, <span class="arithmatex">\(\mu\)</span>, and a name to save the results under. To see the orbital elements associated with the calculated orbit we simply type:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>gdisplay orbit1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>gdisplay orbit1
 </code></pre></div>
 <h4 id="optimal-circular-orbit-transfer">Optimal Circular Orbit Transfer<a class="headerlink" href="#optimal-circular-orbit-transfer" title="Permanent link">&para;</a></h4>
 <p>Consider establishing the optimal transfer trajectory to get from a given circular orbit around the earth to the largest radial position in a given amount of time using constant thrust and the thrust angle as the control. This problem can be posed as a classic optimal control problem of finding extrema of a functional of the form:</p>
@@ -3235,7 +3275,7 @@ J = r(t_f)
 <li>Using 5 hour timesteps and 500 grid points for each timestep</li>
 </ul>
 <p>we run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot
 </code></pre></div>
 <p>The above solves the problem using a three stage Lobatto collocation scheme:</p>
 <div class="arithmatex">\[
@@ -3257,15 +3297,15 @@ J = r(t_f)
 \end{array}
 \]</div>
 <p>we can enter:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Implementation</p>
 <p>My implementation of this boundary value problem solver can be found here: <a href="https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp">C++ Code</a></p>
 </div>
 <p>The resulting plots can be displayed with:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>gdisplay traj_plot
-<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>gdisplay traj_plot_control
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>gdisplay traj_plot
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>gdisplay traj_plot_control
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
@@ -3309,7 +3349,7 @@ J = r(t_f)
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 31, 2026 15:33:21 UTC">March 31, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 13, 2026 13:37:24 UTC">April 13, 2026</span>
   </span>
 
     

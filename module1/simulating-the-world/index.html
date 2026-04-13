@@ -1670,14 +1670,14 @@ $$
 
 <p>Compared to the iteration formula that we obtained with Runge-Kutta algorithm, the above solution is exact even if <span class="arithmatex">\(\Delta t\)</span> is large. Of course it is only valid if <span class="arithmatex">\(F\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(u\)</span> are constant on the interval.</p>
 <div class="admonition tip">
-<p class="admonition-title">Try It in CCST</p>
+<p class="admonition-title">Try It in <a href="https://ccst-phi.vercel.app/">CCST</a></p>
 <p>The <a href="../../cloud-control-toolbox/">Cloud Controls &amp; Simulation Toolbox</a> implements both simulation methods discussed above. Define a linear system and simulate it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ss [[0,1],[0,0]] [[0],[1]] [[1,0]] [[0]] -&gt; double_int
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sim double_int x0:[0,0] t:5 u:[1] -&gt; sim_plot
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>gdisplay sim_plot
 </code></pre></div>
 <p>For nonlinear systems, CCST uses Runge-Kutta integration automatically:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dynamics &quot;[x[1], -np.sin(x[0]) - 0.1*x[1]]&quot; 2 -&gt; pendulum
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dynamics f:&quot;[x[1], -np.sin(x[0]) - 0.1*x[1]]&quot; n:2 -&gt; pendulum
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sim pendulum x0:[2.5,0] t:15 -&gt; pend_sim
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>gdisplay pend_sim
 </code></pre></div>
@@ -1705,7 +1705,7 @@ $$
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 31, 2026 15:33:21 UTC">March 31, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 13, 2026 13:37:24 UTC">April 13, 2026</span>
   </span>
 
     
