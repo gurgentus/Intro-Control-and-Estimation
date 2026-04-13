@@ -193,7 +193,7 @@ $$
 
 </div>
 
-!!! tip "Try It in CCST"
+!!! tip "Try It in [CCST](https://ccst-phi.vercel.app/)"
     Define the 1D car plant and design a PID controller in the toolbox below:
 
     ```
@@ -212,10 +212,10 @@ $$
 
     Try tuning $k_p$, $k_i$, $k_d$ to see their effect on overshoot and settling time. For example, compare a PI controller (`pid car1d y 1.0 0.5 0.0`) with a PID controller (`pid car1d y 1.0 0.5 0.3`).
 
-You can check your work using the interactive Cloud Control Toolbox:
+<!-- You can check your work using the interactive Cloud Control Toolbox:
 
 <iframe src="https://ccst-phi.vercel.app/" width="100%" height="800" frameborder="0" style="border: 1px solid #ddd; border-radius: 4px;" allowfullscreen></iframe>
 
 <p style="margin-top: 1rem;">
 <a href="https://ccst-phi.vercel.app/" target="_blank" class="md-button md-button--primary">Open in New Tab</a>
-</p>
+</p> -->

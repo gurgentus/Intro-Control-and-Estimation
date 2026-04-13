@@ -215,7 +215,7 @@ relating the single input to single output in the frequency domain. Again, leave
 
 </div>
 
-!!! tip "Try It in CCST"
+!!! tip "Try It in [CCST](https://ccst-phi.vercel.app/)"
     Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to define state-space systems and compute transfer functions. For example, for the car model linearized about constant thrust with steering as the single input:
 
     ```

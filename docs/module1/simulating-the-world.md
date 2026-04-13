@@ -199,7 +199,7 @@ $$
 
 Compared to the iteration formula that we obtained with Runge-Kutta algorithm, the above solution is exact even if $\Delta t$ is large. Of course it is only valid if $F$, $G$, and $u$ are constant on the interval.
 
-!!! tip "Try It in CCST"
+!!! tip "Try It in [CCST](https://ccst-phi.vercel.app/)"
     The [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) implements both simulation methods discussed above. Define a linear system and simulate it:
 
     ```
@@ -211,7 +211,7 @@ Compared to the iteration formula that we obtained with Runge-Kutta algorithm, t
     For nonlinear systems, CCST uses Runge-Kutta integration automatically:
 
     ```
-    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1]]" 2 -> pendulum
+    dynamics f:"[x[1], -np.sin(x[0]) - 0.1*x[1]]" n:2 -> pendulum
     sim pendulum x0:[2.5,0] t:15 -> pend_sim
     gdisplay pend_sim
     ```

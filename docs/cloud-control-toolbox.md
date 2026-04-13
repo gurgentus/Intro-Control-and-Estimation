@@ -310,10 +310,20 @@
 
     Define arbitrary nonlinear systems using Python/NumPy expressions:
     ```
-    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1]]" 2 -> pendulum
+    dynamics f:"[x[1], -np.sin(x[0]) - 0.1*x[1]]" n:2 -> pendulum
     ```
 
     This defines a damped pendulum: $\dot{\theta} = \omega$, $\dot{\omega} = -\sin(\theta) - 0.1\omega$.
+
+    The key:value arguments are:
+
+    | Key | Required | Description |
+    |-----|----------|-------------|
+    | `f:` | yes | State derivative expression $\dot{x} = f(x, u)$ |
+    | `n:` | yes | Number of states |
+    | `m:` | no | Number of inputs (default: 0) |
+    | `p:` | no | Number of outputs (default: n) |
+    | `y:` | no | Output expression $y = g(x, u)$ (default: full state) |
 
     Simulate it:
     ```
@@ -323,8 +333,13 @@
 
     Systems with inputs:
     ```
-    dynamics "[x[1], -np.sin(x[0]) - 0.1*x[1] + u[0]]" 2 1 -> forced_pendulum
+    dynamics f:"[x[1], -np.sin(x[0]) - 0.1*x[1] + u[0]]" n:2 m:1 -> forced_pendulum
     sim forced_pendulum x0:[0,0] t:10 u:[0.5] -> forced_sim
+    ```
+
+    Systems with a custom output map (e.g., the 11-state rocket with 9 measured outputs):
+    ```
+    dynamics f:"[x[3], x[4], x[5], ...]" n:11 m:3 p:9 y:"[x[0], x[1], ...]" -> rocket
     ```
 
     #### Scheduled Inputs

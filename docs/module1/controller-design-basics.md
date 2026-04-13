@@ -149,7 +149,7 @@ $$
 
 This is the question of the next lecture.
 
-!!! tip "Try It in CCST"
+!!! tip "Try It in [CCST](https://ccst-phi.vercel.app/)"
     Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to explore the mass-spring-damper system from the exercises above. For example, with $m=1$, $\beta=0.5$, $\kappa=4$ ($\omega=2$, $\xi=0.125$):
 
     ```

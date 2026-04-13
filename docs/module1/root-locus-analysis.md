@@ -177,7 +177,7 @@ $$
 
 for $k > 0$ and $k < 0$ respectively.
 
-!!! tip "Try It in CCST"
+!!! tip "Try It in [CCST](https://ccst-phi.vercel.app/)"
     Use the [Cloud Controls & Simulation Toolbox](../cloud-control-toolbox.md) to visualize poles and zeros of transfer functions. For the double integrator plant $T_o(s) = 1/s^2$:
 
     ```
