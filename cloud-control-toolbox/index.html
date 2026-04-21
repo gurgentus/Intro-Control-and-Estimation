@@ -2777,7 +2777,7 @@
 </code></pre></div></p>
 <h3 id="running-scripts">Running Scripts<a class="headerlink" href="#running-scripts" title="Permanent link">&para;</a></h3>
 <p>Execute a <code>.ccst</code> script file (lines starting with <code>#</code> are comments):
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>run example.ccst
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>run msi.ccst
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
@@ -2983,13 +2983,14 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 <h3 id="rendezvous-and-docking">Rendezvous and Docking<a class="headerlink" href="#rendezvous-and-docking" title="Permanent link">&para;</a></h3>
 <p>CCST includes a complete set of tools for spacecraft proximity operations using Clohessy-Wiltshire (CW) relative motion dynamics.</p>
 <h4 id="setup-cw-plant">Setup: CW Plant<a class="headerlink" href="#setup-cw-plant" title="Permanent link">&para;</a></h4>
-<p>Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit (<span class="arithmatex">\(n = 0.00113\)</span> rad/s):
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>run rdv_setup.ccst
+<p>Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit (<span class="arithmatex">\(n = 0.00113\)</span> rad/s). <code>rendezvous.ccst</code> declares the 6×6 state-space, designs an LQR controller, and builds the closed loop:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>ss A_cw B_cw C_cw D_cw -&gt; cw_plant
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>lqr cw_plant Q_rdv R_rdv -&gt; K_rdv
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>statefb cw_plant K_rdv   -&gt; cw_cl
 </code></pre></div></p>
-<p>This creates <code>cw_plant</code> (6-state linear system), an LQR controller <code>K_rdv</code>, and the closed-loop system <code>rdv_cl</code>.</p>
 <h4 id="closed-loop-rendezvous">Closed-Loop Rendezvous<a class="headerlink" href="#closed-loop-rendezvous" title="Permanent link">&para;</a></h4>
 <p>Simulate a V-bar approach from 1 km behind and 100 m below:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sim rdv_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -&gt; vbar_pos
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sim cw_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -&gt; vbar_pos
 <a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>gdisplay vbar_pos
 <a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>scene3d vbar_pos -&gt; vbar_3d
 <a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>gdisplay vbar_3d
@@ -3031,44 +3032,12 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 </thead>
 <tbody>
 <tr>
-<td><code>rdv_setup.ccst</code></td>
-<td>CW plant + LQR controller setup</td>
-</tr>
-<tr>
-<td><code>rdv_vbar.ccst</code></td>
-<td>V-bar approach with LQR</td>
-</tr>
-<tr>
-<td><code>rdv_outofplane.ccst</code></td>
-<td>Out-of-plane correction</td>
-</tr>
-<tr>
-<td><code>rdv_ellipse.ccst</code></td>
-<td>Safety ellipse departure</td>
-</tr>
-<tr>
-<td><code>rdv_targeting.ccst</code></td>
-<td>Two-impulse open-loop targeting</td>
-</tr>
-<tr>
-<td><code>rdv_finitethrust.ccst</code></td>
-<td>Finite-thrust maneuver</td>
-</tr>
-<tr>
-<td><code>rdv_attitude.ccst</code></td>
-<td>Attitude control</td>
-</tr>
-<tr>
-<td><code>rdv_coupled.ccst</code></td>
-<td>Coupled translation + attitude cascade</td>
+<td><code>rendezvous.ccst</code></td>
+<td>CW plant + LQR + V-bar, out-of-plane, ellipse, targeting, finite-thrust scenarios</td>
 </tr>
 <tr>
 <td><code>rdv_docking.ccst</code></td>
-<td>Multi-phase docking with finite burns</td>
-</tr>
-<tr>
-<td><code>rendezvous.ccst</code></td>
-<td>Run all scenarios sequentially</td>
+<td>Multi-phase V-bar docking on a nonlinear chief+deputy truth model with LQR tracking</td>
 </tr>
 </tbody>
 </table>
@@ -3080,23 +3049,29 @@ where <code>G_noise</code> is the noise input matrix, <code>Qn</code> is process
 <div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ros2_sim G x0:[1,0,0,0] t:10 dt:0.01 -&gt; ros2_result
 </code></pre></div>
 <h4 id="foxglove-visualization">Foxglove Visualization<a class="headerlink" href="#foxglove-visualization" title="Permanent link">&para;</a></h4>
-<p>Add the <code>foxglove</code> flag to publish visualization markers:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -&gt; docking_ros2
+<p>Start the per-session visualization pod once, then launch <code>ros2_sim</code> with the <code>foxglove</code> flag. <code>viz_start</code> scales the <code>ccst-viz-&lt;session&gt;</code> pod up (no-op if already running) and echoes the Foxglove WebSocket URL:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>viz_start
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -&gt; docking_ros2
 </code></pre></div></p>
 <p>Parameters:</p>
 <ul>
-<li><code>foxglove</code>: enable Foxglove bridge on <code>ws://localhost:8765</code></li>
+<li><code>foxglove</code>: enable Foxglove bridge; the sim connects to the session's viz pod via a FastDDS discovery server</li>
 <li><code>rtf:&lt;factor&gt;</code>: real-time factor (0 = fast as possible, 1 = real-time, 10 = 10x speed)</li>
 <li><code>scale:&lt;factor&gt;</code>: position scaling for visualization (default 1000, i.e. km to m)</li>
+<li><code>shape:&lt;name&gt;</code> / <code>size:&lt;meters&gt;</code>: marker geometry (e.g. <code>shape:rocket size:10</code>)</li>
 <li><code>frame:&lt;var&gt;:&lt;parent&gt;:&lt;child&gt;</code>: add TF frame transforms</li>
 </ul>
-<p>Connect <a href="https://studio.foxglove.dev">Foxglove Studio</a> to <code>ws://localhost:8765</code> to view the 3D visualization in real time.</p>
+<p>Click the printed URL (or copy it via the "click to copy" affordance) and open it in <a href="https://studio.foxglove.dev">Foxglove Studio</a> to view the 3D visualization in real time.</p>
+<p>The viz pod auto-stops after <code>VIZ_IDLE_TIMEOUT</code> (default 20 min) of no active Foxglove connections and no running sims. Manage it explicitly with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>viz_status        # replicas, Foxglove URL, connections, idle time
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>viz_stop          # scale the viz pod back down
+</code></pre></div>
 <h4 id="managing-simulations">Managing Simulations<a class="headerlink" href="#managing-simulations" title="Permanent link">&para;</a></h4>
 <p>List running simulations:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>ros2_ps
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ros2_ps
 </code></pre></div></p>
 <p>Stop all running simulations:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ros2_stop
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>ros2_stop
 </code></pre></div></p>
 <h4 id="kubernetes-deployment">Kubernetes Deployment<a class="headerlink" href="#kubernetes-deployment" title="Permanent link">&para;</a></h4>
 <p>When deployed to Kubernetes (<code>CCST_SIM_BACKEND=k8s</code>), simulations run as K8s Jobs with S3-based data transfer. The system automatically handles job creation, data upload/download, and cleanup. See the <a href="https://github.com/gurgentus/ccst">K8s Deployment Guide</a> for setup instructions.</p>
@@ -3155,13 +3130,13 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 \]</div>
 <h4 id="minimum-jerk-trajectories">Minimum Jerk Trajectories<a class="headerlink" href="#minimum-jerk-trajectories" title="Permanent link">&para;</a></h4>
 <p>To calculate a 5 second minimum jerk lane-change trajectory that takes a car traveling at 5m/s to the lane 4 meters to the left at the position 20 meters ahead we can run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot
 </code></pre></div>
 <p>Here the arguments specify initial position <span class="arithmatex">\([x,y]\)</span>, initial velocity <span class="arithmatex">\([v_x, v_y]\)</span>, initial acceleration <span class="arithmatex">\([a_x, a_y]\)</span>, final position, final velocity, final acceleration, and the time to perform the maneuver.</p>
 <h5 id="multiple-trajectory-generation">Multiple Trajectory Generation<a class="headerlink" href="#multiple-trajectory-generation" title="Permanent link">&para;</a></h5>
 <p>In real world trajectory generation oftentimes it is not enough to simply generate one optimal trajectory. In practice, one way to approach motion planning for lane changes or turns is to generate many possible trajectories by varying the final conditions and then selecting the best trajectory based on a more complicated cost function that could include, for example, distance to collisions, distance to the center of the lane, fuel consumption, etc.</p>
 <p>Running the command:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot 1000 True 20
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>generate_2d_traj &#39;[-20, 0]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; &#39;[0, 4]&#39; &#39;[5, 0]&#39; &#39;[0, 0]&#39; 5 lane_plot 1000 True 20
 </code></pre></div></p>
 <p>generates 20 trajectories by varying the final velocities and positions, and chooses the best path based on ensuring forward direction of motion and jerk minimization. The additional parameters above specify number of grid points (1000), a flag that specifies that many trajectories should be sampled (True), and the number of trajectories to sample.</p>
 <div class="admonition info">
@@ -3172,7 +3147,7 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 </div>
 <h4 id="optimal-stopping-control">Optimal Stopping Control<a class="headerlink" href="#optimal-stopping-control" title="Permanent link">&para;</a></h4>
 <p>To calculate the optimal control history to bring a car traveling at 20 m/s to a complete stop in 500 m we can run:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>generate_optimal_stop_traj 20 500 stop_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>generate_optimal_stop_traj 20 500 stop_plot
 </code></pre></div></p>
 <h4 id="dijkstras-algorithm">Dijkstra's Algorithm<a class="headerlink" href="#dijkstras-algorithm" title="Permanent link">&para;</a></h4>
 <p>One way to use Dijkstra's algorithm is to represent the map as a grid using an <span class="arithmatex">\(m\)</span> by <span class="arithmatex">\(n\)</span> matrix. To avoid entering a large matrix by hand the toolbox allows to upload any image whose grayscale can be thresholded to produce the obstacles.</p>
@@ -3186,19 +3161,19 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 </li>
 <li>
 <p><strong>Generate Grid</strong>: To generate a grid by thresholding grayscale values of the image we can use:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>generate_grid map1 15 15
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>generate_grid map1 15 15
 </code></pre></div>
    where <code>map1</code> is the handle of the uploaded image and the last two parameters specify the height and width of the grid. The matrix representing the grid will be saved under <code>map1_grid</code> name with values at each cell representing the grayscale value of the image.</p>
 </li>
 <li>
 <p><strong>Create Obstacles</strong>: Entering <code>gdisplay map1_grid</code> displays this matrix. To turn these values into free space and obstacle regions needed to run Dijkstra's algorithm we can enter:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>generate_grid_obstacles map1_grid 2 map2_grid
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>generate_grid_obstacles map1_grid 2 map2_grid
 </code></pre></div>
    This sets cells with value larger than 2 to 1 (representing obstacle region) and cells with values less than or equal to 2 to 0 (representing free space). We can display the resulting matrix with <code>gdisplay map2_grid</code>.</p>
 </li>
 <li>
 <p><strong>Run Dijkstra's</strong>: Finally, running the following finds a path from the (11,0) position on the grid to the (8,6) position:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>dijkstras map2_grid [11,0] [8,6] map_result
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>dijkstras map2_grid [11,0] [8,6] map_result
 </code></pre></div></p>
 </li>
 </ol>
@@ -3208,10 +3183,10 @@ l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t
 <p>The toolbox uses C++ code under the hood for performance.</p>
 <h4 id="lamberts-problem">Lambert's Problem<a class="headerlink" href="#lamberts-problem" title="Permanent link">&para;</a></h4>
 <p>Consider a satellite to be located at <span class="arithmatex">\(r_1 = 5000 \hat{I} + 10000 \hat{J} + 2100 \hat{K}\)</span> km. We want to design a trajectory that will put the satellite at <span class="arithmatex">\(r_2 = -14600 \hat{I} + 2500 \hat{J} + 7000 \hat{K}\)</span> km after one hour. This is achieved by solving Lambert's problem, by calling:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>lambert &#39;[5000, 10000, 2100]&#39; &#39;[-14600, 2500, 7000]&#39; 3600 True 398600 orbit1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>lambert &#39;[5000, 10000, 2100]&#39; &#39;[-14600, 2500, 7000]&#39; 3600 True 398600 orbit1
 </code></pre></div>
 <p>Here we specified the two positions, time, whether we want the prograde trajectory, <span class="arithmatex">\(\mu\)</span>, and a name to save the results under. To see the orbital elements associated with the calculated orbit we simply type:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>gdisplay orbit1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>gdisplay orbit1
 </code></pre></div>
 <h4 id="optimal-circular-orbit-transfer">Optimal Circular Orbit Transfer<a class="headerlink" href="#optimal-circular-orbit-transfer" title="Permanent link">&para;</a></h4>
 <p>Consider establishing the optimal transfer trajectory to get from a given circular orbit around the earth to the largest radial position in a given amount of time using constant thrust and the thrust angle as the control. This problem can be posed as a classic optimal control problem of finding extrema of a functional of the form:</p>
@@ -3275,7 +3250,7 @@ J = r(t_f)
 <li>Using 5 hour timesteps and 500 grid points for each timestep</li>
 </ul>
 <p>we run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>orb_transfer_lobatto3 3.986004418e5 1500 6000 20 6678 0.5 5 500 traj_plot
 </code></pre></div>
 <p>The above solves the problem using a three stage Lobatto collocation scheme:</p>
 <div class="arithmatex">\[
@@ -3297,15 +3272,15 @@ J = r(t_f)
 \end{array}
 \]</div>
 <p>we can enter:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>orb_transfer 3.986004418e5 1500 6000 20 6678 0.5 5 500 2 [0,1] [[0,0],[0.5,0.5]] [0.5,0.5] traj_plot
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Implementation</p>
 <p>My implementation of this boundary value problem solver can be found here: <a href="https://github.com/gurgentus/ccst/blob/master/nums/CollocationSolver.cpp">C++ Code</a></p>
 </div>
 <p>The resulting plots can be displayed with:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>gdisplay traj_plot
-<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>gdisplay traj_plot_control
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>gdisplay traj_plot
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>gdisplay traj_plot_control
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
@@ -3349,7 +3324,7 @@ J = r(t_f)
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 21, 2026 00:03:20 UTC">April 21, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 21, 2026 00:24:16 UTC">April 21, 2026</span>
   </span>
 
     
