@@ -35,7 +35,7 @@ $$
 U(s) = K(s) (Y_d(s) - Y(s))
 $$
 
-The dynamical system with the transfer function $K(s)$ is called the controller. You can easily verify that in this case the relation \eqref{propcont} has a more general form
+The dynamical system with the transfer function $K(s)$ is called the controller. You can easily verify that in this case the relation $\eqref{propcont}$ has a more general form
 
 $$
 T_c(s) = \frac{K(s) T(s)}{1 + K(s) T(s)}
@@ -59,7 +59,7 @@ First we investigate the problem as an open-loop control. At this point do the f
 
 <div class='bordered'>
 
-1. Write the second order scalar differential equation \eqref{secondord} above as a first order system (recall that you want to define a new state variable as the derivative of $x$). You may abuse notation and use $x = [x, \dot{x}]^T$ as the name of the resulting vector. Then the resulting system should be in the form from last lecture.
+1. Write the second order scalar differential equation $\eqref{secondord}$ above as a first order system (recall that you want to define a new state variable as the derivative of $x$). You may abuse notation and use $x = [x, \dot{x}]^T$ as the name of the resulting vector. Then the resulting system should be in the form from last lecture.
 
    \[
    \dot{x}(t) = F x(t) + G u(t),
@@ -75,7 +75,7 @@ First we investigate the problem as an open-loop control. At this point do the f
 
 2. Assume initial conditions are $x(0) = \dot{x}(0) = 0$.
 
-   Go back to the system in the previous part. Take the Laplace Transform of the system and show that you get the same relation \eqref{siso} whether you work with the second order scalar equation or the corresponding first order system.
+   Go back to the system in the previous part. Take the Laplace Transform of the system and show that you get the same relation $\eqref{siso}$ whether you work with the second order scalar equation or the corresponding first order system.
 
    Verify that it is also the same as was derived in the last lecture, i.e.:
 
@@ -86,7 +86,7 @@ First we investigate the problem as an open-loop control. At this point do the f
 
    Assume $u = u_0$ is constant. Here we consider the equation only on the interval $t \in [0, \infty)$. We could consider $t \in (-\infty, \infty)$ and define $u$ to be a unit step function (i.e. equal to $0$ for $t < 0$ and $u_0$ for $t \ge 0$). Such formulation will prove to be useful later, but don't worry about it for now. (Hint: in either case the Laplace Transform is $u_0/s$).
 
-   What is the steady state in this case? (Note you can use the system to find this, but also the scalar equation \eqref{secondord} gives this immediately since the steady state corresponds to the derivatives equal to zero).
+   What is the steady state in this case? (Note you can use the system to find this, but also the scalar equation $\eqref{secondord}$ gives this immediately since the steady state corresponds to the derivatives equal to zero).
 
    Write down the expression for $Y(s)$ in this case. Write the expression for $Y(s)$ in terms of the parameters $\omega$ and $\xi$.
 
@@ -109,7 +109,7 @@ First we investigate the problem as an open-loop control. At this point do the f
 As you can see even for a simple second order constant coefficient differential equation there could be a lot of different behaviors of the solution. If the idea is to use a control to drive the output $y(t)$ to a steady state, the success (and performance) of such endeavor depends critically on the parameters of the system, which might be fixed.
 
 Here is a natural question then. If the behavior is not what we want, can a feedback mechanism improve the situation?
-Say we want to 'drive' $y(t)$ to the value $y_0$. Going back to \eqref{propcont}, you can imagine the simplest type of command signal $y_d$ to be a constant command $y_d(t) = y_0$. Using the corresponding Laplace Transform $Y_d(s) = y_0/s$ in \eqref{propcont} results in
+Say we want to 'drive' $y(t)$ to the value $y_0$. Going back to $\eqref{propcont}$, you can imagine the simplest type of command signal $y_d$ to be a constant command $y_d(t) = y_0$. Using the corresponding Laplace Transform $Y_d(s) = y_0/s$ in $\eqref{propcont}$ results in
 
 $$
 Y(s) = \frac{k u_0 T(s)}{s (1 + k T(s))} = T_c(s) Y_d(s),

@@ -784,6 +784,6 @@
 
 <h2>Interactive Toolbox</h2>
 
-<iframe src="https://ccst-phi.vercel.app/" width="100%" height="800" frameborder="0" style="border: 1px solid #ddd; border-radius: 4px;" allowfullscreen></iframe>
+<iframe src="https://ccst-phi.vercel.app/" allow="clipboard-write" width="100%" height="800" frameborder="0" style="border: 1px solid #ddd; border-radius: 4px;" allowfullscreen></iframe>
 
 </div>

@@ -32,7 +32,7 @@ Let us rewrite the equation one more time as
 \label{rloc}
 k \frac{N(s)}{D(s)} = -1.
 \end{equation}
-This is of course true only if $N(s) \ne 0$, but this is clearly the case as otherwise \eqref{zeros} would imply that $D(s) = 0$, implying that both $N(s)$ and $D(s)$ have a common factor $s$. There are several rules which must be satisfied that can help in sketching the poles as $k$ is varied.
+This is of course true only if $N(s) \ne 0$, but this is clearly the case as otherwise $\eqref{zeros}$ would imply that $D(s) = 0$, implying that both $N(s)$ and $D(s)$ have a common factor $s$. There are several rules which must be satisfied that can help in sketching the poles as $k$ is varied.
 
 Let $s$ be such a pole. First, note that since we assume that the coefficients are real, any roots that have an imaginary part must come in complex conjugate pairs. In other words, the root locus picture is symmetric about the real axis. Let $z_1, \dots, z_m$ be the roots of $N(s)$ (i.e. zeros of $T_o$) and $p_1, \dots, p_n$ be the roots of $D(s) = 0$ (i.e. the poles of $T_o$). Then
 
@@ -63,7 +63,7 @@ There are other considerations one might consider when trying to draw a root loc
 
 We end this section with a slightly more technical argument that helps us understand the angle of the asymptotes of the poles diverging to infinity.
 
-Let us write \eqref{rloc} as
+Let us write $\eqref{rloc}$ as
 
 $$
 1 +  k \frac{b_0 (s - z_1) \dots (s-z_m)}{(s-p_1) \dots (s-p_n)} = 0.

@@ -63,7 +63,7 @@ or after simplification
 l \sin(\delta w - \Delta \xi) = l \sin(\delta w) - v \Delta t \sin(\delta w).
 \end{equation}
 
-Note that by the mean value theorem $\sin(\delta w) - \sin(\delta w - \Delta \xi) = \cos(\delta w_*) \Delta \xi$ for some value of $\delta w_*$ between $\delta w - \Delta \xi$ and $\delta w$. Substituting the expression for $\sin(\delta w - \Delta \xi)$ into \eqref{m2} results in,
+Note that by the mean value theorem $\sin(\delta w) - \sin(\delta w - \Delta \xi) = \cos(\delta w_*) \Delta \xi$ for some value of $\delta w_*$ between $\delta w - \Delta \xi$ and $\delta w$. Substituting the expression for $\sin(\delta w - \Delta \xi)$ into $\eqref{m2}$ results in,
 
 $$
 l \sin(\delta w) - l \Delta \xi \cos(\delta w_*) = l \sin(\delta w) - v \Delta t \sin(\delta w),

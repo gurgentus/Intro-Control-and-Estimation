@@ -33,7 +33,7 @@ Once you've designed your controller and specified how to chose the control $u(t
 
 ## Runge-Kutta Method
 
-To see how the Runge-Kutta method works, we use the Fundamental Theorem of Calculus to rewrite \eqref{nonlin} as
+To see how the Runge-Kutta method works, we use the Fundamental Theorem of Calculus to rewrite $\eqref{nonlin}$ as
 
 $$
 x(t_k) = x(t_{k-1}) + \int_{t_{k-1}}^{t_k} f(x(s), u(s), s) ds.

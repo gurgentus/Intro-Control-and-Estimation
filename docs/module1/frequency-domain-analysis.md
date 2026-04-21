@@ -17,7 +17,7 @@ $$
 x_0 + x(t), u_0 + u(t), \mbox{ and } w_0 + w(t).
 $$
 
-We will come back to the idea of linearization in later weeks, so for now there is no danger in assuming that \eqref{eq:dyneq} describes our model precisely.
+We will come back to the idea of linearization in later weeks, so for now there is no danger in assuming that $\eqref{eq:dyneq}$ describes our model precisely.
 
 Our goal is to study the dynamics in the form of an abstract first order linear differential equation
 
@@ -70,7 +70,7 @@ $$
 
 i.e. the control $u$ depends not just on the current state, but on the contribution from all previous states. Here $H_\xi$ is an identity matrix with some of the rows removed (if the corresponding element of the state should not have an effect).
 
-Can we still put this into the framework of \eqref{eq:abssys}? Let's define $\xi(t)$ to be the solution of
+Can we still put this into the framework of $\eqref{eq:abssys}$? Let's define $\xi(t)$ to be the solution of
 
 $$
 \dot{\xi}(t) = H_\xi x(t), \quad \xi(0) = 0.
@@ -148,7 +148,7 @@ $$
 
 Hopefully at this point you are convinced that there are various way to design our controls and a pressing question is how these choices can be designed to drive the state of our model to the behavior we want. One complication of this analysis is the fact that the relations between the control and the state are through differential equations. As we will see in the remainder of this week, the Laplace Transform which you doubtless encountered in an elementary differential equations course is extremely helpful in this context. Below I describe the 'Frequency Domain Methods' that utilize this marvelous invention of Pierre-Simon Laplace.
 
-We'll come back to the feedback controls soon enough, but for now let's return to \eqref{eq:dyneq} as is and assume in addition that the matrices $F$ and $G$ do not depend on $t$ and there is no uncontrollable input. Recall that the Laplace Transform of the resulting equation
+We'll come back to the feedback controls soon enough, but for now let's return to $\eqref{eq:dyneq}$ as is and assume in addition that the matrices $F$ and $G$ do not depend on $t$ and there is no uncontrollable input. Recall that the Laplace Transform of the resulting equation
 
 $$
 \dot{x}(t) = F x(t) + G u(t)
@@ -205,7 +205,7 @@ Finally, we make one more assumption destroying large part of our generalization
 
 Time to get your hands dirty. Take the linearization of the simple car model from last week. We'll need to get rid of some of the controls to fit it into our assumptions. I will suggest assuming a constant thrust $T = T_0$ and leaving the steering to be our only control $u = \delta w$. We will also have to introduce the output equation $y(t) = H x(t)$ for this model. Our state $x$ consisted of things like velocity, orientation, the position coordinates, and mass. Let's take the orientation $\xi$ as our output. Can you see what $H$ would have to be to provide this information to $y$ on the proverbial golden plate? How about $H = [0, 1, 0, 0, 0]$ since the orientation $\xi$ appeared as the second component of $x$?
 
-At this point you should be able to turn in an assignment with a nonlinear system of differential equations describing the simple car model, the linearized version done last week (written in the abstract form of \eqref{eq:dyneq} and \eqref{eq:siso}, with the expressions for $F$, $G$,and $H$ given separately, and an expression in the form:
+At this point you should be able to turn in an assignment with a nonlinear system of differential equations describing the simple car model, the linearized version done last week (written in the abstract form of $\eqref{eq:dyneq}$ and $\eqref{eq:siso}$, with the expressions for $F$, $G$,and $H$ given separately, and an expression in the form:
 
 $$
 Y(s) = T(s) U(s)
