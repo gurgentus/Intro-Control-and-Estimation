@@ -1463,7 +1463,7 @@ that gives us an input/output relation between the command signal (desired <span
 <div class="arithmatex">\[
 U(s) = K(s) (Y_d(s) - Y(s))
 \]</div>
-<p>The dynamical system with the transfer function <span class="arithmatex">\(K(s)\)</span> is called the controller. You can easily verify that in this case the relation \eqref{propcont} has a more general form</p>
+<p>The dynamical system with the transfer function <span class="arithmatex">\(K(s)\)</span> is called the controller. You can easily verify that in this case the relation <span class="arithmatex">\(\eqref{propcont}\)</span> has a more general form</p>
 <div class="arithmatex">\[
 T_c(s) = \frac{K(s) T(s)}{1 + K(s) T(s)}
 \]</div>
@@ -1482,7 +1482,7 @@ If it's been a while since differential equations here's a refresher on Laplace 
 <p>First we investigate the problem as an open-loop control. At this point do the following as homework:</p>
 <div class='bordered'>
 
-1. Write the second order scalar differential equation \eqref{secondord} above as a first order system (recall that you want to define a new state variable as the derivative of $x$). You may abuse notation and use $x = [x, \dot{x}]^T$ as the name of the resulting vector. Then the resulting system should be in the form from last lecture.
+1. Write the second order scalar differential equation $\eqref{secondord}$ above as a first order system (recall that you want to define a new state variable as the derivative of $x$). You may abuse notation and use $x = [x, \dot{x}]^T$ as the name of the resulting vector. Then the resulting system should be in the form from last lecture.
 
    \[
    \dot{x}(t) = F x(t) + G u(t),
@@ -1498,7 +1498,7 @@ If it's been a while since differential equations here's a refresher on Laplace 
 
 2. Assume initial conditions are $x(0) = \dot{x}(0) = 0$.
 
-   Go back to the system in the previous part. Take the Laplace Transform of the system and show that you get the same relation \eqref{siso} whether you work with the second order scalar equation or the corresponding first order system.
+   Go back to the system in the previous part. Take the Laplace Transform of the system and show that you get the same relation $\eqref{siso}$ whether you work with the second order scalar equation or the corresponding first order system.
 
    Verify that it is also the same as was derived in the last lecture, i.e.:
 
@@ -1509,7 +1509,7 @@ If it's been a while since differential equations here's a refresher on Laplace 
 
    Assume $u = u_0$ is constant. Here we consider the equation only on the interval $t \in [0, \infty)$. We could consider $t \in (-\infty, \infty)$ and define $u$ to be a unit step function (i.e. equal to $0$ for $t < 0$ and $u_0$ for $t \ge 0$). Such formulation will prove to be useful later, but don't worry about it for now. (Hint: in either case the Laplace Transform is $u_0/s$).
 
-   What is the steady state in this case? (Note you can use the system to find this, but also the scalar equation \eqref{secondord} gives this immediately since the steady state corresponds to the derivatives equal to zero).
+   What is the steady state in this case? (Note you can use the system to find this, but also the scalar equation $\eqref{secondord}$ gives this immediately since the steady state corresponds to the derivatives equal to zero).
 
    Write down the expression for $Y(s)$ in this case. Write the expression for $Y(s)$ in terms of the parameters $\omega$ and $\xi$.
 
@@ -1531,7 +1531,7 @@ If it's been a while since differential equations here's a refresher on Laplace 
 
 <p>As you can see even for a simple second order constant coefficient differential equation there could be a lot of different behaviors of the solution. If the idea is to use a control to drive the output <span class="arithmatex">\(y(t)\)</span> to a steady state, the success (and performance) of such endeavor depends critically on the parameters of the system, which might be fixed.</p>
 <p>Here is a natural question then. If the behavior is not what we want, can a feedback mechanism improve the situation?
-Say we want to 'drive' <span class="arithmatex">\(y(t)\)</span> to the value <span class="arithmatex">\(y_0\)</span>. Going back to \eqref{propcont}, you can imagine the simplest type of command signal <span class="arithmatex">\(y_d\)</span> to be a constant command <span class="arithmatex">\(y_d(t) = y_0\)</span>. Using the corresponding Laplace Transform <span class="arithmatex">\(Y_d(s) = y_0/s\)</span> in \eqref{propcont} results in</p>
+Say we want to 'drive' <span class="arithmatex">\(y(t)\)</span> to the value <span class="arithmatex">\(y_0\)</span>. Going back to <span class="arithmatex">\(\eqref{propcont}\)</span>, you can imagine the simplest type of command signal <span class="arithmatex">\(y_d\)</span> to be a constant command <span class="arithmatex">\(y_d(t) = y_0\)</span>. Using the corresponding Laplace Transform <span class="arithmatex">\(Y_d(s) = y_0/s\)</span> in <span class="arithmatex">\(\eqref{propcont}\)</span> results in</p>
 <div class="arithmatex">\[
 Y(s) = \frac{k u_0 T(s)}{s (1 + k T(s))} = T_c(s) Y_d(s),
 \]</div>
@@ -1597,7 +1597,7 @@ D(s) = 0.
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 13, 2026 13:37:24 UTC">April 13, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 21, 2026 00:03:20 UTC">April 21, 2026</span>
   </span>
 
     

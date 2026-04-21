@@ -1463,7 +1463,7 @@ N(s) + \frac{1}{k} D(s) = 0,
 \label{rloc}
 k \frac{N(s)}{D(s)} = -1.
 \end{equation}
-This is of course true only if <span class="arithmatex">\(N(s) \ne 0\)</span>, but this is clearly the case as otherwise \eqref{zeros} would imply that <span class="arithmatex">\(D(s) = 0\)</span>, implying that both <span class="arithmatex">\(N(s)\)</span> and <span class="arithmatex">\(D(s)\)</span> have a common factor <span class="arithmatex">\(s\)</span>. There are several rules which must be satisfied that can help in sketching the poles as <span class="arithmatex">\(k\)</span> is varied.</p>
+This is of course true only if <span class="arithmatex">\(N(s) \ne 0\)</span>, but this is clearly the case as otherwise <span class="arithmatex">\(\eqref{zeros}\)</span> would imply that <span class="arithmatex">\(D(s) = 0\)</span>, implying that both <span class="arithmatex">\(N(s)\)</span> and <span class="arithmatex">\(D(s)\)</span> have a common factor <span class="arithmatex">\(s\)</span>. There are several rules which must be satisfied that can help in sketching the poles as <span class="arithmatex">\(k\)</span> is varied.</p>
 <p>Let <span class="arithmatex">\(s\)</span> be such a pole. First, note that since we assume that the coefficients are real, any roots that have an imaginary part must come in complex conjugate pairs. In other words, the root locus picture is symmetric about the real axis. Let <span class="arithmatex">\(z_1, \dots, z_m\)</span> be the roots of <span class="arithmatex">\(N(s)\)</span> (i.e. zeros of <span class="arithmatex">\(T_o\)</span>) and <span class="arithmatex">\(p_1, \dots, p_n\)</span> be the roots of <span class="arithmatex">\(D(s) = 0\)</span> (i.e. the poles of <span class="arithmatex">\(T_o\)</span>). Then</p>
 <div class="arithmatex">\[
 k \frac{N(s)}{D(s)} = k \frac{b_0 (s - z_1) \dots (s-z_m)}{(s-p_1) \dots (s-p_n)} = -1.
@@ -1484,7 +1484,7 @@ k \frac{N(s)}{D(s)} = k \frac{b_0 (s - z_1) \dots (s-z_m)}{(s-p_1) \dots (s-p_n)
 </ul>
 <p>There are other considerations one might consider when trying to draw a root locus by hand, however, with easy access to computational methods we can mostly rely on computers to plot the root locus in real time as we vary <span class="arithmatex">\(k\)</span> or other parameters. We will develop code to do this in the next few lectures.</p>
 <p>We end this section with a slightly more technical argument that helps us understand the angle of the asymptotes of the poles diverging to infinity.</p>
-<p>Let us write \eqref{rloc} as</p>
+<p>Let us write <span class="arithmatex">\(\eqref{rloc}\)</span> as</p>
 <div class="arithmatex">\[
 1 +  k \frac{b_0 (s - z_1) \dots (s-z_m)}{(s-p_1) \dots (s-p_n)} = 0.
 \]</div>
@@ -1595,7 +1595,7 @@ s_0 \rightarrow \frac{\sum z_i - \sum p_i}{n-m}
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 13, 2026 13:37:24 UTC">April 13, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 21, 2026 00:03:20 UTC">April 21, 2026</span>
   </span>
 
     
