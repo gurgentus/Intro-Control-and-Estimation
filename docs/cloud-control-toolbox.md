@@ -88,7 +88,7 @@
 
     Execute a `.ccst` script file (lines starting with `#` are comments):
     ```
-    run example.ccst
+    run msi.ccst
     ```
 
 === "Controls"
@@ -367,18 +367,18 @@
 
     #### Setup: CW Plant
 
-    Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit ($n = 0.00113$ rad/s):
+    Define the linearized relative motion dynamics in the LVLH frame for a 400 km LEO orbit ($n = 0.00113$ rad/s). `rendezvous.ccst` declares the 6×6 state-space, designs an LQR controller, and builds the closed loop:
     ```
-    run rdv_setup.ccst
+    ss A_cw B_cw C_cw D_cw -> cw_plant
+    lqr cw_plant Q_rdv R_rdv -> K_rdv
+    statefb cw_plant K_rdv   -> cw_cl
     ```
-
-    This creates `cw_plant` (6-state linear system), an LQR controller `K_rdv`, and the closed-loop system `rdv_cl`.
 
     #### Closed-Loop Rendezvous
 
     Simulate a V-bar approach from 1 km behind and 100 m below:
     ```
-    sim rdv_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -> vbar_pos
+    sim cw_cl x0:[-0.1,-1.0,0,0,0,0] t:3000 u:[0,0,0] dt:1 x y z -> vbar_pos
     gdisplay vbar_pos
     scene3d vbar_pos -> vbar_3d
     gdisplay vbar_3d
@@ -429,16 +429,8 @@
 
     | Script | Scenario |
     |--------|----------|
-    | `rdv_setup.ccst` | CW plant + LQR controller setup |
-    | `rdv_vbar.ccst` | V-bar approach with LQR |
-    | `rdv_outofplane.ccst` | Out-of-plane correction |
-    | `rdv_ellipse.ccst` | Safety ellipse departure |
-    | `rdv_targeting.ccst` | Two-impulse open-loop targeting |
-    | `rdv_finitethrust.ccst` | Finite-thrust maneuver |
-    | `rdv_attitude.ccst` | Attitude control |
-    | `rdv_coupled.ccst` | Coupled translation + attitude cascade |
-    | `rdv_docking.ccst` | Multi-phase docking with finite burns |
-    | `rendezvous.ccst` | Run all scenarios sequentially |
+    | `rendezvous.ccst` | CW plant + LQR + V-bar, out-of-plane, ellipse, targeting, finite-thrust scenarios |
+    | `rdv_docking.ccst` | Multi-phase V-bar docking on a nonlinear chief+deputy truth model with LQR tracking |
 
 === "ROS2 & Foxglove"
 
@@ -454,19 +446,28 @@
 
     #### Foxglove Visualization
 
-    Add the `foxglove` flag to publish visualization markers:
+    Start the per-session visualization pod once, then launch `ros2_sim` with the `foxglove` flag. `viz_start` scales the `ccst-viz-<session>` pod up (no-op if already running) and echoes the Foxglove WebSocket URL:
     ```
+    viz_start
     ros2_sim cw_plant x0:[-0.1,-1.0,0,0,0,0] t:3100 schedule:docking_sched dt:1 foxglove rtf:10 scale:100 x y z -> docking_ros2
     ```
 
     Parameters:
 
-    - `foxglove`: enable Foxglove bridge on `ws://localhost:8765`
+    - `foxglove`: enable Foxglove bridge; the sim connects to the session's viz pod via a FastDDS discovery server
     - `rtf:<factor>`: real-time factor (0 = fast as possible, 1 = real-time, 10 = 10x speed)
     - `scale:<factor>`: position scaling for visualization (default 1000, i.e. km to m)
+    - `shape:<name>` / `size:<meters>`: marker geometry (e.g. `shape:rocket size:10`)
     - `frame:<var>:<parent>:<child>`: add TF frame transforms
 
-    Connect [Foxglove Studio](https://studio.foxglove.dev) to `ws://localhost:8765` to view the 3D visualization in real time.
+    Click the printed URL (or copy it via the "click to copy" affordance) and open it in [Foxglove Studio](https://studio.foxglove.dev) to view the 3D visualization in real time.
+
+    The viz pod auto-stops after `VIZ_IDLE_TIMEOUT` (default 20 min) of no active Foxglove connections and no running sims. Manage it explicitly with:
+
+    ```
+    viz_status        # replicas, Foxglove URL, connections, idle time
+    viz_stop          # scale the viz pod back down
+    ```
 
     #### Managing Simulations
 
